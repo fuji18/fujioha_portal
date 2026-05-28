@@ -1,0 +1,20 @@
+{
+  "name": "template-project",
+  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+  "workspaceFolder": "/workspaces/template-project",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "containerEnv": {
+    "GITHUB_TOKEN": "${localEnv:GH_TOKEN}"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "chat.mcp.autoStart": "newAndOutdated"
+      }
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post_create.sh"
+}
