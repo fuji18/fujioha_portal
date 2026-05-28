@@ -1,7 +1,7 @@
 {
-  "name": "template-project",
+  "name": "fujioha_portal",
   "image": "mcr.microsoft.com/devcontainers/base:bookworm",
-  "workspaceFolder": "/workspaces/template-project",
+  "workspaceFolder": "/workspaces/fujioha_portal",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {}
