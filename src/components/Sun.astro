@@ -1,0 +1,47 @@
+---
+import { SUN_PALETTES, type Mood } from '../lib/moods';
+
+interface Props {
+  mood: Mood;
+}
+
+const { mood } = Astro.props;
+const [a, b, c] = SUN_PALETTES[mood];
+---
+
+<svg
+  class="fp-sun"
+  data-sun
+  viewBox="0 0 600 600"
+  aria-hidden="true"
+>
+  <defs>
+    <radialGradient id="sg" cx="50%" cy="50%" r="50%">
+      <stop data-sun-stop="0" offset="0%" stop-color={a} stop-opacity="1" />
+      <stop data-sun-stop="1" offset="55%" stop-color={b} stop-opacity=".55" />
+      <stop data-sun-stop="2" offset="100%" stop-color={c} stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <circle cx="300" cy="300" r="290" fill="url(#sg)" />
+  <circle
+    data-sun-ring
+    cx="300"
+    cy="300"
+    r="170"
+    fill="none"
+    stroke={c}
+    stroke-opacity=".25"
+    stroke-width="1"
+  />
+  <circle
+    data-sun-ring
+    cx="300"
+    cy="300"
+    r="120"
+    fill="none"
+    stroke={c}
+    stroke-opacity=".2"
+    stroke-width="1"
+    stroke-dasharray="3 5"
+  />
+</svg>

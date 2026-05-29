@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>fujioha.com — おはよう</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Tokens ─────────────────────────────────────────────── */
+    :root{
+      --accent: #c96442;
+      --paper: #fbf8f3;
+      --paper-warm: #f5ecdc;
+      --paper-cool: #eef1f4;
+      --ink: #1f1a14;
+      --ink-soft: #3a3329;
+      --mute: #6b6358;
+      --faint: #b8b2a4;
+      --rule: #e1d9c8;
+      --jp: 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      --jp-sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+      --en: 'Newsreader', 'Source Serif Pro', Georgia, serif;
+      --en-body: 'Zen Kaku Gothic New', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+      --maxw: 1240px;
+    }
+
+    html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);
+      font-family:var(--en-body);font-size:16px;line-height:1.6;
+      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    *,*::before,*::after{box-sizing:border-box}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+    /* ── Page wrapper / mood tint ───────────────────────────── */
+    .fp{min-height:100vh;background:var(--paper);
+      transition:background .6s ease, color .6s ease}
+    .fp[data-mood="morning"]  {background:linear-gradient(180deg,#fcf4e6 0%,var(--paper) 380px)}
+    .fp[data-mood="afternoon"]{background:linear-gradient(180deg,#fbf8f3 0%,var(--paper) 380px)}
+    .fp[data-mood="evening"]  {background:linear-gradient(180deg,#f5d9c2 0%,var(--paper) 380px)}
+    .fp[data-mood="night"]    {background:#15131b;color:#f0ebe1;--ink:#f0ebe1;--ink-soft:#d9d2c4;
+      --mute:#9b9385;--faint:#5a544b;--rule:#2a2520;--paper:#15131b}
+    .fp[data-mood="night"]::before{
+      content:"";position:fixed;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse at 80% -10%,#3a3340 0%,transparent 50%)}
+
+    /* ── Type helpers ───────────────────────────────────────── */
+    .fp-jp{font-family:var(--jp-sans);font-feature-settings:"palt"}
+    .fp-en{font-family:var(--en-body);letter-spacing:.005em}
+    .fp-mono{font-family:var(--mono);letter-spacing:.01em}
+    .fp-mute{color:var(--mute)}
+    .fp-faint{color:var(--faint)}
+    .fp-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+      text-transform:uppercase;color:var(--mute);margin-bottom:14px}
+    .fp-h2{font-family:var(--jp);font-weight:500;font-size:30px;line-height:1.35;
+      margin:0;letter-spacing:.005em;color:var(--ink)}
+    .fp-h2-en{font-family:var(--en);font-style:italic;font-size:17px;font-weight:400;
+      margin:6px 0 0;line-height:1.4}
+
+    .fp-link{color:var(--ink-soft);font-size:13px;text-decoration:none;
+      border-bottom:1px solid transparent;padding-bottom:1px;transition:border-color .15s,color .15s}
+    .fp-link:hover{color:var(--accent);border-color:var(--accent)}
+
+    .fp-pill{display:inline-flex;align-items:center;gap:8px;
+      padding:6px 12px;border-radius:999px;font-size:12.5px;
+      border:1px solid var(--rule);background:rgba(255,255,255,.4)}
+    .fp-pill-warm{border-color:color-mix(in oklch, var(--accent) 35%, var(--rule));
+      background:color-mix(in oklch, var(--accent) 8%, var(--paper))}
+    .fp-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);
+      box-shadow:0 0 0 3px color-mix(in oklch, var(--accent) 18%, transparent)}
+
+    .fp-section{max-width:var(--maxw);margin:0 auto;padding:64px 56px}
+    .fp-section-head{display:flex;justify-content:space-between;align-items:flex-end;
+      padding-bottom:32px;border-bottom:1px solid var(--rule);margin-bottom:36px;gap:32px}
+    .fp-section-count{font-size:13px}
+
+    /* ── Topbar ─────────────────────────────────────────────── */
+    .fp-topbar{max-width:var(--maxw);margin:0 auto;padding:24px 56px;
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:13px}
+    .fp-mark{display:inline-flex;align-items:center;gap:10px;font-weight:600}
+    .fp-mark-dot{width:14px;height:14px;border-radius:50%;background:var(--accent);
+      box-shadow:0 0 0 3px color-mix(in oklch, var(--accent) 16%, transparent)}
+    .fp-mark-name{font-family:var(--en);font-weight:600;font-size:18px;letter-spacing:.01em}
+    .fp-mark-meta{font-size:12px;color:var(--mute);font-style:italic;margin-left:4px}
+    .fp-topbar-right{display:flex;align-items:center;gap:14px;font-size:12.5px}
+
+    /* ── Hero ───────────────────────────────────────────────── */
+    .fp-hero{position:relative;max-width:var(--maxw);margin:0 auto;padding:48px 56px 80px;
+      overflow:hidden}
+    .fp-sun{position:absolute;right:-80px;top:-40px;width:560px;height:560px;
+      pointer-events:none;opacity:.9;transition:opacity .6s}
+    .fp[data-mood="night"] .fp-sun{opacity:.55}
+    .fp-hero-inner{position:relative;max-width:760px}
+    .fp-hero-date{display:flex;gap:10px;align-items:baseline;
+      font-size:13px;color:var(--mute);margin-bottom:36px}
+    .fp-greeting{font-family:var(--jp);font-weight:500;font-size:88px;line-height:1.05;
+      letter-spacing:.005em;margin:0;color:var(--ink)}
+    .fp-greeting-dot{color:var(--accent)}
+    .fp-greeting-en{font-family:var(--en);font-style:italic;font-weight:400;
+      font-size:22px;color:var(--mute);margin:8px 0 28px}
+    .fp-greeting-en em{font-style:italic;color:var(--accent)}
+    .fp-intro{max-width:560px;font-size:15.5px;line-height:1.75;color:var(--ink-soft);
+      margin:0 0 26px}
+    .fp-intro .fp-en{display:block;margin-top:6px;font-size:14px}
+    .fp-hero-meta{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;font-size:13px}
+    .fp-kou-inline{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;
+      padding:6px 0;font-size:13px}
+    .fp-kou-inline .fp-jp{color:var(--ink-soft)}
+
+    /* ── Sites ─────────────────────────────────────────────── */
+    .fp-sites-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .fp-site{display:flex;flex-direction:column;background:var(--paper);
+      border:1px solid var(--rule);border-radius:4px;overflow:hidden;
+      transition:transform .25s cubic-bezier(.2,.7,.3,1), box-shadow .25s, border-color .25s;
+      text-decoration:none;color:inherit;cursor:pointer}
+    .fp[data-mood="night"] .fp-site{background:#1c1924;border-color:#2a2530}
+    .fp-site:hover{transform:translateY(-2px);
+      box-shadow:0 14px 40px -20px rgba(0,0,0,.25);
+      border-color:var(--card-accent)}
+    .fp-site-art{position:relative;height:220px;overflow:hidden;
+      border-bottom:1px solid var(--rule)}
+    .fp-illus{width:100%;height:100%;display:block}
+    .fp-site-body{padding:28px 30px 30px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .fp-site-url{font-size:12px;color:var(--mute);margin-bottom:4px;font-weight:500}
+    .fp-site-url .fp-faint{font-weight:400}
+    .fp-site-jp{font-family:var(--jp);font-weight:500;font-size:28px;line-height:1.3;
+      margin:0;letter-spacing:.005em}
+    .fp-site-en{font-family:var(--en);font-style:italic;font-size:15px;color:var(--mute);
+      margin-bottom:8px}
+    .fp-site-tagline{font-size:14.5px;line-height:1.7;color:var(--ink-soft);margin:0}
+    .fp-site-tagline-en{font-size:13px;line-height:1.6;margin:4px 0 0}
+    .fp-site-stats{display:flex;gap:32px;margin-top:18px;padding-top:18px;
+      border-top:1px dashed var(--rule)}
+    .fp-stat{display:flex;flex-direction:column;gap:2px}
+    .fp-stat-n{font-family:var(--en);font-weight:600;font-size:22px;color:var(--ink);
+      line-height:1}
+    .fp-stat-l{font-family:var(--jp-sans);font-size:11px;color:var(--mute);
+      letter-spacing:.02em;display:inline-flex;gap:5px;align-items:baseline;flex-wrap:wrap}
+    .fp-stat-en{font-family:var(--en);font-style:italic;opacity:.85}
+    .fp-site-cta{display:flex;align-items:center;gap:12px;margin-top:22px;
+      font-size:14px;color:var(--card-accent,var(--accent));font-weight:500}
+    .fp-cta-jp{font-family:var(--jp-sans);font-weight:500}
+    .fp-cta-arrow{transition:transform .2s}
+    .fp-site:hover .fp-cta-arrow{transform:translateX(4px)}
+    .fp-cta-en{font-family:var(--en);font-style:italic;font-weight:400;font-size:13px;
+      margin-left:auto}
+
+    /* ── Featured (Today's 十八番) ─────────────────────────── */
+    .fp-shuffle{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;
+      border:1px solid var(--rule);border-radius:999px;font-size:13px;color:var(--ink-soft);
+      transition:all .15s;font-family:var(--jp-sans)}
+    .fp-shuffle:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,255,255,.4)}
+    .fp-shuffle-icon{font-size:15px;display:inline-block;transition:transform .4s}
+    .fp-shuffle:hover .fp-shuffle-icon{transform:rotate(180deg)}
+
+    .fp-pick{display:grid;grid-template-columns:1.1fr 1fr;gap:0;
+      border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--paper)}
+    .fp[data-mood="night"] .fp-pick{background:#1c1924;border-color:#2a2530}
+    .fp-pick-art{min-height:360px;position:relative}
+    .fp-grad-gradient1{background:
+      radial-gradient(circle at 30% 20%, #fde6c8 0%, transparent 60%),
+      radial-gradient(circle at 70% 80%, #c96442 0%, transparent 50%),
+      linear-gradient(135deg, #f0b27a 0%, #c96442 100%)}
+    .fp-grad-gradient2{background:
+      radial-gradient(circle at 20% 80%, #6b88a8 0%, transparent 55%),
+      linear-gradient(160deg, #c2b9ab 0%, #5a6671 100%)}
+    .fp-grad-gradient3{background:
+      linear-gradient(180deg, #0e1422 0%, #1a2238 100%);
+      position:relative}
+    .fp-grad-gradient3::before{content:"漢";position:absolute;left:50%;top:50%;
+      transform:translate(-50%,-50%);font-family:var(--jp);font-size:200px;
+      color:#f6d472;opacity:.85;font-weight:600}
+    .fp-grad-gradient4{background:
+      radial-gradient(circle at 70% 30%, #d9c8a8 0%, transparent 60%),
+      linear-gradient(180deg, #6b7d5a 0%, #2a3528 100%)}
+    .fp-grad-gradient5{background:
+      radial-gradient(circle at 50% 50%, #f6d472 0%, transparent 60%),
+      linear-gradient(135deg, #c98b42 0%, #3e2f1f 100%)}
+
+    .fp-pick-body{padding:44px 48px;display:flex;flex-direction:column;gap:12px}
+    .fp-pick-src{display:flex;align-items:center;gap:8px;font-size:12.5px;margin-bottom:6px}
+    .fp-pick-jp{font-family:var(--jp);font-weight:500;font-size:34px;line-height:1.3;
+      margin:0;letter-spacing:.005em}
+    .fp-pick-en{font-family:var(--en);font-style:italic;font-size:18px;color:var(--mute);margin:0 0 10px}
+    .fp-pick-blurb{font-size:14.5px;line-height:1.75;color:var(--ink-soft);margin:0}
+    .fp-pick-blurb-en{font-size:13px;line-height:1.6;margin:6px 0 0}
+    .fp-pick-foot{display:flex;justify-content:space-between;align-items:center;
+      margin-top:auto;padding-top:28px;font-size:13.5px}
+    .fp-pick-cta{color:var(--accent);font-weight:500;font-family:var(--jp-sans);
+      cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+    .fp-pick-cta:hover .fp-cta-arrow{transform:translateX(4px)}
+
+    /* ── Alley (noren) ─────────────────────────────────────── */
+    .fp-alley-row{position:relative;display:grid;
+      grid-template-columns:repeat(5,1fr);gap:20px;padding:24px 8px 60px}
+    .fp-alley-beam{position:absolute;left:0;right:0;top:24px;height:3px;
+      background:var(--ink);opacity:.85;border-radius:1px}
+    .fp[data-mood="night"] .fp-alley-beam{background:#5a544b}
+
+    .fp-noren{position:relative;height:280px;cursor:pointer;padding-top:26px}
+    .fp-noren-window{position:absolute;inset:26px 0 36px;
+      border:1px solid var(--rule);background:linear-gradient(180deg,#fff6e1 0%,#f5e9d8 100%);
+      overflow:hidden}
+    .fp[data-mood="night"] .fp-noren-window{background:linear-gradient(180deg,#2a2630 0%,#1a1620 100%);border-color:#3a3540}
+    .fp-noren-window-inner{position:absolute;inset:14px;
+      border:1px dashed var(--rule);opacity:.5}
+    .fp-noren-cloth{position:absolute;left:-6px;right:-6px;top:0;height:200px;
+      transition:height .35s cubic-bezier(.2,.7,.3,1);
+      display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+      padding-top:18px;color:#fbf8f3;
+      box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
+    .fp-noren.is-lifted .fp-noren-cloth{height:62px}
+    .fp-noren:hover .fp-noren-cloth{height:78px}
+    .fp-noren.is-dashed .fp-noren-cloth{opacity:.45;
+      background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.15) 0 6px, transparent 6px 12px)}
+    .fp-noren-label{font-family:var(--jp);font-weight:600;font-size:24px;letter-spacing:.08em;
+      writing-mode:vertical-rl;transition:font-size .25s,writing-mode .25s}
+    .fp-noren.is-lifted .fp-noren-label,
+    .fp-noren:hover .fp-noren-label{font-size:13px;writing-mode:horizontal-tb}
+    .fp-noren-label-en{font-family:var(--en);font-style:italic;font-size:10.5px;
+      letter-spacing:.04em;opacity:.85;margin-top:10px;text-align:center;
+      writing-mode:horizontal-tb}
+    .fp-noren-slits{position:absolute;left:0;right:0;bottom:0;height:60%;
+      display:flex;justify-content:space-around;pointer-events:none}
+    .fp-noren-slit{width:2px;background:rgba(255,255,255,.18);height:100%}
+    .fp-noren-plate{position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+      background:var(--paper);border:1px solid var(--ink);padding:6px 12px;
+      text-align:center;white-space:nowrap;font-size:11.5px;line-height:1.4;
+      box-shadow:0 2px 0 var(--ink)}
+    .fp[data-mood="night"] .fp-noren-plate{background:#1c1924;border-color:#5a544b;box-shadow:0 2px 0 #5a544b}
+    .fp-noren-name{display:inline-flex;gap:6px;align-items:baseline;
+      font-family:var(--jp);font-size:12.5px;font-weight:500;color:var(--ink);
+      margin-bottom:2px}
+    .fp-noren-name-en{font-family:var(--en);font-style:italic;font-size:10.5px;
+      font-weight:400;color:var(--mute)}
+    .fp-noren-tag{font-size:10px;margin-top:1px}
+
+    /* ── Recent feed ───────────────────────────────────────── */
+    .fp-feed{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
+    .fp-feed-item{display:grid;
+      grid-template-columns:48px 56px 130px 1fr 1fr;gap:18px;
+      padding:18px 8px;border-bottom:1px dashed var(--rule);align-items:baseline;
+      transition:background .15s}
+    .fp-feed-item:hover{background:color-mix(in oklch,var(--accent) 4%,transparent)}
+    .fp-feed-item:last-child{border-bottom:0}
+    .fp-feed-date{font-size:12.5px}
+    .fp-feed-kind{font-size:10.5px;letter-spacing:.06em;padding:2px 8px;
+      border-radius:2px;text-align:center;font-family:var(--jp-sans);font-weight:500;
+      display:inline-flex;gap:5px;align-items:baseline;justify-content:center}
+    .fp-feed-kind .fp-en{font-family:var(--en);font-style:italic;font-weight:400;opacity:.85;
+      text-transform:lowercase}
+    .fp-feed-kind-post{background:color-mix(in oklch,var(--accent) 14%,transparent);
+      color:var(--accent)}
+    .fp-feed-kind-release{background:color-mix(in oklch,#2a4a6b 14%,transparent);color:#2a4a6b}
+    .fp[data-mood="night"] .fp-feed-kind-release{color:#8aa8d0}
+    .fp-feed-src{font-size:12.5px}
+    .fp-feed-title{font-size:15.5px;font-family:var(--jp);font-weight:500;letter-spacing:.005em}
+    .fp-feed-title-en{font-size:13px;font-style:italic;font-family:var(--en)}
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .fp-footer{max-width:var(--maxw);margin:0 auto;padding:48px 56px 64px;
+      border-top:1px solid var(--rule);margin-top:24px}
+    .fp-footer-row{display:flex;justify-content:space-between;align-items:center;gap:24px}
+    .fp-footer-mark{display:flex;align-items:center;gap:12px}
+
+    /* ── Language toggle (via Tweaks) ──────────────────────── */
+    .fp.lang-jp .fp-en{display:none !important}
+    .fp.lang-en .fp-jp{display:none !important}
+
+    /* ── Compact ──────────────────────────────────────────── */
+    @media (max-width: 920px){
+      .fp-greeting{font-size:60px}
+      .fp-sites-grid{grid-template-columns:1fr}
+      .fp-pick{grid-template-columns:1fr}
+      .fp-alley-row{grid-template-columns:repeat(3,1fr)}
+      .fp-feed-item{grid-template-columns:48px 56px 1fr;gap:10px}
+      .fp-feed-src,.fp-feed-title-en{display:none}
+    }
+
+    /* Tiny "back to wireframes" pill (top-right corner) */
+    .fp-archive-link{position:fixed;top:14px;right:14px;z-index:100;
+      font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+      padding:6px 10px;background:rgba(255,255,255,.7);
+      border:1px solid var(--rule);border-radius:999px;color:var(--mute);
+      backdrop-filter:blur(8px);text-decoration:none}
+    .fp-archive-link:hover{color:var(--accent);border-color:var(--accent)}
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="fp-archive-link" href="wireframes.html">↩ wireframes (5案)</a>
+  <div id="root"></div>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="morning-portal.jsx"></script>
+
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "accent": "#c96442",
+      "language": "bilingual",
+      "timeOverride": "night",
+      "showAlley": true,
+      "showFeed": true
+    }/*EDITMODE-END*/;
+
+    const ACCENTS = ['#c96442', '#2a6f4a', '#2a4a6b', '#7a4a6b', '#8a5a2a'];
+
+    function App() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      React.useEffect(() => {
+        document.documentElement.style.setProperty('--accent', t.accent);
+      }, [t.accent]);
+
+      // Resolve lang class on the page root
+      const langClass = t.language === 'jp' ? 'lang-jp' :
+                        t.language === 'en' ? 'lang-en' : '';
+
+      // Inject a runtime class onto the .fp element after mount
+      React.useEffect(() => {
+        const el = document.querySelector('.fp');
+        if (!el) return;
+        el.classList.remove('lang-jp', 'lang-en');
+        if (langClass) el.classList.add(langClass);
+      }, [langClass]);
+
+      return (
+        <React.Fragment>
+          <MorningPortal tweaks={t} />
+
+          <TweaksPanel title="Tweaks">
+            <TweakSection label="Look" />
+            <TweakColor
+              label="Accent"
+              value={t.accent}
+              options={ACCENTS}
+              onChange={(v) => setTweak('accent', v)}
+            />
+            <TweakRadio
+              label="Language"
+              value={t.language}
+              options={[
+                { value: 'bilingual', label: 'JP+EN' },
+                { value: 'jp', label: 'JP' },
+                { value: 'en', label: 'EN' }
+              ]}
+              onChange={(v) => setTweak('language', v)}
+            />
+
+            <TweakSection label="Time of day (preview)" />
+            <TweakSelect
+              label="Greeting"
+              value={t.timeOverride}
+              options={[
+                { value: 'auto', label: 'Auto · 自動' },
+                { value: 'morning', label: '朝 · おはよう' },
+                { value: 'afternoon', label: '昼 · こんにちは' },
+                { value: 'evening', label: '夕 · こんばんは' },
+                { value: 'night', label: '夜 · おそくまで' }
+              ]}
+              onChange={(v) => setTweak('timeOverride', v)}
+            />
+
+            <TweakSection label="Sections" />
+            <TweakToggle label="Alley (商店街)"
+              value={t.showAlley} onChange={(v) => setTweak('showAlley', v)} />
+            <TweakToggle label="Recent feed"
+              value={t.showFeed} onChange={(v) => setTweak('showFeed', v)} />
+
+            <TweakSection label="Visit counter" />
+            <TweakButton
+              label="カウンタをリセット / Reset"
+              onClick={() => {
+                try { localStorage.removeItem('fujioha_visits'); } catch(e){}
+                location.reload();
+              }}
+            />
+          </TweaksPanel>
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+---
+import { resolveMood } from '../lib/moods';
+
+const now = new Date();
+const mood = resolveMood(now);
+const hh = String(now.getHours()).padStart(2, '0');
+const mm = String(now.getMinutes()).padStart(2, '0');
+---
+
+<header class="fp-topbar">
+  <div class="fp-mark">
+    <span class="fp-mark-dot"></span>
+    <span class="fp-mark-name">fujioha</span>
+  </div>
+  <div class="fp-topbar-right">
+    <span class="fp-mono fp-faint" data-clock>{hh}:{mm} JST</span>
+    <span class="fp-faint">·</span>
+    <span class="fp-mono fp-faint" data-mood-label>{mood}</span>
+    <span class="fp-faint">·</span>
+    <a class="fp-link" href="#">Journal</a>
+    <a class="fp-link" href="#">About</a>
+  </div>
+</header>

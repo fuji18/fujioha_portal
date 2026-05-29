@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>fujioha.com root — Wireframes</title>
+  <style>
+    html,body{margin:0;padding:0;background:#f0eee9;
+      font-family:'Inter','Hiragino Kaku Gothic ProN',system-ui,sans-serif}
+    #root{width:100vw;height:100vh}
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="wireframes.jsx"></script>
+
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "accent": "#c96442",
+      "language": "bilingual"
+    }/*EDITMODE-END*/;
+
+    const ACCENTS = ['#c96442', '#2a4a6b', '#1f6b4a', '#8a3a6b', '#2a251f'];
+
+    function App() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      // Apply accent as CSS var on root so all wireframes pick it up.
+      React.useEffect(() => {
+        document.documentElement.style.setProperty('--wf-accent', t.accent);
+      }, [t.accent]);
+
+      // Language toggle hides .wf-jp or .wf-en (also covers nested writingMode JP labels)
+      React.useEffect(() => {
+        const styleId = 'wf-lang-toggle';
+        let el = document.getElementById(styleId);
+        if (!el) {
+          el = document.createElement('style');
+          el.id = styleId;
+          document.head.appendChild(el);
+        }
+        if (t.language === 'jp') el.textContent = '.wf-en{display:none !important}';
+        else if (t.language === 'en') el.textContent = '.wf-jp{display:none !important}';
+        else el.textContent = '';
+      }, [t.language]);
+
+      return (
+        <React.Fragment>
+          <DesignCanvas>
+            <DCSection
+              id="root-concepts"
+              title="fujioha.com root — 5 wireframe concepts"
+              subtitle="ルートサイトの方向性を、5つのワイヤーフレームで比較。Tweaksで色と言語を切り替え可。"
+            >
+              <DCArtboard id="a" label="A · Portal Grid  ·  プロジェクト一覧型" width={1080} height={760}>
+                <ConceptA />
+              </DCArtboard>
+              <DCArtboard id="b" label="B · Asaichi  ·  朝のあいさつ" width={1080} height={760}>
+                <ConceptB />
+              </DCArtboard>
+              <DCArtboard id="c" label="C · Index  ·  テキスト主体" width={1080} height={760}>
+                <ConceptC />
+              </DCArtboard>
+              <DCArtboard id="d" label="D · Shōtengai  ·  暖簾の商店街" width={1080} height={760}>
+                <ConceptD />
+              </DCArtboard>
+              <DCArtboard id="e" label="E · Live Magazine  ·  日刊ふじおは新聞" width={1080} height={760}>
+                <ConceptE />
+              </DCArtboard>
+            </DCSection>
+
+            <DCSection
+              id="who-it-attracts"
+              title="どの読者層に強いか / Who each concept attracts"
+              subtitle="各案がもっとも反応する流入経路の予想。"
+            >
+              <DCArtboard id="map" label="読者層マップ  ·  audience fit" width={1620} height={520}>
+                <AudienceFit />
+              </DCArtboard>
+            </DCSection>
+          </DesignCanvas>
+
+          <TweaksPanel title="Tweaks">
+            <TweakSection label="Accent" />
+            <TweakColor
+              label="Color"
+              value={t.accent}
+              options={ACCENTS}
+              onChange={(v) => setTweak('accent', v)}
+            />
+            <TweakSection label="Language" />
+            <TweakRadio
+              label="Show"
+              value={t.language}
+              options={[
+                { value: 'bilingual', label: 'JP+EN' },
+                { value: 'jp', label: 'JP' },
+                { value: 'en', label: 'EN' }
+              ]}
+              onChange={(v) => setTweak('language', v)}
+            />
+          </TweaksPanel>
+        </React.Fragment>
+      );
+    }
+
+    // Tiny audience fit chart — text only, fast to scan.
+    function AudienceFit() {
+      const rows = [
+        ['A · Portal Grid',  '通りすがり',   'high',  '検索/SNS',  'med',  'サブドメ流入', 'high', '知人',     'med',  '開発者仲間','med',
+          '無難。何のサイトか即理解できる。'],
+        ['B · Asaichi',      '通りすがり',   'med',   '検索/SNS',  'high', 'サブドメ流入', 'med',  '知人',     'high', '開発者仲間','low',
+          '雰囲気とブランド体験で記憶に残るタイプ。再訪率に効く。'],
+        ['C · Index',        '通りすがり',   'low',   '検索/SNS',  'med',  'サブドメ流入', 'low',  '知人',     'med',  '開発者仲間','high',
+          'HN/Reddit/技術系SNSで強い。SEOクローラとも相性◎。'],
+        ['D · Shōtengai',    '通りすがり',   'high',  '検索/SNS',  'high', 'サブドメ流入', 'med',  '知人',     'med',  '開発者仲間','low',
+          'ビジュアルでバズりやすい。海外ユーザの興味を引きやすい。'],
+        ['E · Live Magazine','通りすがり',   'med',   '検索/SNS',  'med',  'サブドメ流入', 'high', '知人',     'high', '開発者仲間','med',
+          'コンテンツ更新があるほど強い。RSS/購読で再訪を稼げる。'],
+      ];
+
+      const cellColor = (v) => v === 'high' ? 'var(--wf-accent,#c96442)' :
+        v === 'med' ? '#5a544b' : '#b8b3aa';
+      const cellWeight = (v) => v === 'high' ? 700 : v === 'med' ? 500 : 400;
+
+      return (
+        <div className="wf" style={{ padding: '32px 40px', fontSize: 12 }}>
+          <div style={{ marginBottom: 18 }}>
+            <Bilingual jp="どの案がどの読者層に強いか"
+              en="Which concept resonates with which audience"
+              jpSize={16} enSize={11} />
+          </div>
+
+          <div style={{ display: 'grid',
+            gridTemplateColumns: '170px repeat(5, 1fr) 1.4fr',
+            gap: 0, alignItems: 'stretch', fontSize: 11.5 }}>
+            {/* header */}
+            <div style={{ padding: '8px 6px', borderBottom: '1px solid #2a251f', fontWeight: 600 }}>Concept</div>
+            <div style={{ padding: '8px 6px', borderBottom: '1px solid #2a251f', fontSize: 10.5 }}>
+              通りすがり<br/><span className="wf-mute">passersby</span>
+            </div>
+            <div style={{ padding: '8px 6px', borderBottom: '1px solid #2a251f', fontSize: 10.5 }}>
+              検索/SNS<br/><span className="wf-mute">search · social</span>
+            </div>
+            <div style={{ padding: '8px 6px', borderBottom: '1px solid #2a251f', fontSize: 10.5 }}>
+              サブドメ流入<br/><span className="wf-mute">from subdomains</span>
+            </div>
+            <div style={{ padding: '8px 6px', borderBottom: '1px solid #2a251f', fontSize: 10.5 }}>
+              知人<br/><span className="wf-mute">people who know you</span>
+            </div>
+            <div style={{ padding: '8px 6px', borderBottom: '1px solid #2a251f', fontSize: 10.5 }}>
+              開発者仲間<br/><span className="wf-mute">dev / creator</span>
+            </div>
+            <div style={{ padding: '8px 6px', borderBottom: '1px solid #2a251f', fontWeight: 600 }}>
+              ひとこと
+            </div>
+            {/* rows */}
+            {rows.map((r, i) => (
+              <React.Fragment key={i}>
+                <div style={{ padding: '14px 6px', borderBottom: '1px dashed #d8d4cc', fontWeight: 600 }}>
+                  {r[0]}
+                </div>
+                {[2, 4, 6, 8, 10].map((idx) => (
+                  <div key={idx} style={{ padding: '14px 6px', borderBottom: '1px dashed #d8d4cc',
+                    color: cellColor(r[idx]), fontWeight: cellWeight(r[idx]),
+                    textTransform: 'uppercase', letterSpacing: '.08em', fontSize: 11 }}>
+                    {r[idx]}
+                  </div>
+                ))}
+                <div style={{ padding: '14px 6px', borderBottom: '1px dashed #d8d4cc',
+                  color: '#5a544b', fontSize: 11.5 }} className="wf-jp">
+                  {r[11]}
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 24, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+            <div className="wf-box" style={{ padding: 14 }}>
+              <div className="wf-tag" style={{ marginBottom: 8 }}>📈 アクセス重視で選ぶなら / for max traffic</div>
+              <div className="wf-jp" style={{ fontSize: 12.5, lineHeight: 1.6 }}>
+                <b>D · 商店街</b> か <b>B · 朝のあいさつ</b>。
+                ビジュアルがSNSで拡散しやすく、ブランド体験で再訪を呼ぶ。
+                サブドメインへの送客率も高い。
+              </div>
+            </div>
+            <div className="wf-box" style={{ padding: 14 }}>
+              <div className="wf-tag" style={{ marginBottom: 8 }}>🪴 育て方で選ぶなら / for long-term growth</div>
+              <div className="wf-jp" style={{ fontSize: 12.5, lineHeight: 1.6 }}>
+                <b>E · 新聞</b>。各サブドメインの更新が自動で表れる構造にしておけば、
+                サイトが増えるたびにルートも自動で強くなる。
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function Bilingual({ jp, en, jpSize = 13, enSize = 11 }) {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div className="wf-jp" style={{ fontSize: jpSize }}>{jp}</div>
+          <div className="wf-en" style={{ fontSize: enSize, color: '#8a8377' }}>{en}</div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

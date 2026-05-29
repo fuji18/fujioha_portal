@@ -1,0 +1,74 @@
+---
+import SiteIllustration from './SiteIllustration.astro';
+
+interface Stat {
+  n: string;
+  jp: string;
+  en: string;
+}
+
+interface Props {
+  subdomain: 'hokkaido' | 'game';
+  jp: string;
+  en: string;
+  tagline: string;
+  taglineEn: string;
+  stats: readonly Stat[];
+  tone: 'warm' | 'cool';
+  accent: string;
+  cta: string;
+  ctaEn: string;
+  href?: string;
+}
+
+const {
+  subdomain,
+  jp,
+  en,
+  tagline,
+  taglineEn,
+  stats,
+  tone,
+  accent,
+  cta,
+  ctaEn,
+  href = '#',
+} = Astro.props;
+---
+
+<a
+  class={`fp-site fp-site-${tone}`}
+  style={`--card-accent: ${accent}`}
+  href={href}
+>
+  <div class="fp-site-art">
+    <SiteIllustration subdomain={subdomain} accent={accent} />
+  </div>
+  <div class="fp-site-body">
+    <div class="fp-site-url fp-mono">
+      {subdomain}<span class="fp-faint">.fujioha.com</span>
+    </div>
+    <h3 class="fp-site-jp fp-jp">{jp}</h3>
+    <div class="fp-site-en fp-en">{en}</div>
+    <p class="fp-site-tagline fp-jp">{tagline}</p>
+    <p class="fp-site-tagline-en fp-en fp-mute">{taglineEn}</p>
+    <div class="fp-site-stats">
+      {
+        stats.map((s) => (
+          <div class="fp-stat">
+            <span class="fp-stat-n">{s.n}</span>
+            <span class="fp-stat-l">
+              <span class="fp-jp">{s.jp}</span>
+              <span class="fp-en fp-stat-en">{s.en}</span>
+            </span>
+          </div>
+        ))
+      }
+    </div>
+    <div class="fp-site-cta">
+      <span class="fp-cta-jp fp-jp">{cta}</span>
+      <span class="fp-cta-arrow">→</span>
+      <span class="fp-cta-en fp-en fp-mute">{ctaEn}</span>
+    </div>
+  </div>
+</a>

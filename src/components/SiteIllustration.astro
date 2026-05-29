@@ -1,0 +1,84 @@
+---
+interface Props {
+  subdomain: 'hokkaido' | 'game';
+  accent: string;
+}
+
+const { subdomain, accent } = Astro.props;
+---
+
+{
+  subdomain === 'hokkaido' ? (
+    <svg
+      viewBox="0 0 400 240"
+      class="fp-illus"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <defs>
+        <linearGradient id="sky-h" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#fde6c8" />
+          <stop offset="100%" stop-color="#f5e9d8" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="240" fill="url(#sky-h)" />
+      <circle cx="310" cy="80" r="36" fill={accent} opacity=".8" />
+      <path
+        d="M0 200 L60 150 L110 175 L160 130 L220 165 L290 110 L340 160 L400 140 L400 240 L0 240 Z"
+        fill="#fff"
+        opacity=".85"
+        stroke="#1f1a14"
+        stroke-width=".5"
+      />
+      <path
+        d="M0 220 L80 200 L160 215 L240 195 L320 220 L400 200 L400 240 L0 240 Z"
+        fill="#1f1a14"
+        opacity=".15"
+      />
+      {[40, 140, 250, 340].map((x, i) => (
+        <g transform={`translate(${x},${200 - (i % 2) * 8})`}>
+          <path
+            d="M0 0 L-4 8 L-2 8 L-5 14 L-2 14 L-6 22 L6 22 L2 14 L5 14 L2 8 L4 8 Z"
+            fill="#1f1a14"
+            opacity=".6"
+          />
+        </g>
+      ))}
+    </svg>
+  ) : (
+    <svg
+      viewBox="0 0 400 240"
+      class="fp-illus"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <rect width="400" height="240" fill="#0e1422" />
+      {Array.from({ length: 14 }).map((_, r) =>
+        Array.from({ length: 24 }).map((_, c) => (
+          <rect
+            x={c * 17 + 8}
+            y={r * 17 + 8}
+            width="1"
+            height="1"
+            fill="#fff"
+            opacity=".15"
+          />
+        ))
+      )}
+      <g>
+        <rect x="80" y="40" width="20" height="20" fill="#c96442" />
+        <rect x="100" y="40" width="20" height="20" fill="#c96442" />
+        <rect x="100" y="60" width="20" height="20" fill="#c96442" />
+        <rect x="220" y="80" width="20" height="20" fill="#f6d472" />
+        <rect x="220" y="100" width="20" height="20" fill="#f6d472" />
+        <rect x="240" y="100" width="20" height="20" fill="#f6d472" />
+        <rect x="260" y="100" width="20" height="20" fill="#f6d472" />
+        <rect x="160" y="130" width="20" height="20" fill="#5aa37a" />
+        <rect x="160" y="150" width="20" height="20" fill="#5aa37a" />
+        <rect x="180" y="150" width="20" height="20" fill="#5aa37a" />
+        <rect x="180" y="170" width="20" height="20" fill="#5aa37a" />
+        <rect x="300" y="160" width="20" height="20" fill="#8a9bbf" />
+        <rect x="320" y="160" width="20" height="20" fill="#8a9bbf" />
+      </g>
+      <rect x="0" y="210" width="400" height="2" fill="#fff" opacity=".3" />
+    </svg>
+  )
+}

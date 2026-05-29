@@ -1,0 +1,21 @@
+---
+import Noren from './Noren.astro';
+import { SHOPS } from '../lib/alley';
+---
+
+<section class="fp-section fp-alley">
+  <div class="fp-section-head">
+    <div>
+      <div class="fp-eyebrow">ふじおはの通り · The little alley</div>
+      <h2 class="fp-h2 fp-jp">奥には、まだ準備中の店も。</h2>
+      <p class="fp-h2-en fp-en fp-mute">
+        A few more curtains, some still hanging blank — for the things to come.
+      </p>
+    </div>
+  </div>
+
+  <div class="fp-alley-row">
+    <div class="fp-alley-beam"></div>
+    {SHOPS.map((s) => <Noren {...s} />)}
+  </div>
+</section>

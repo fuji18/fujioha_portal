@@ -1,0 +1,36 @@
+---
+interface Props {
+  jp: string;
+  en: string;
+  sub: string;
+  tag: string;
+  color: string;
+  dashed?: boolean;
+}
+
+const { jp, en, sub, tag, color, dashed = false } = Astro.props;
+---
+
+<div class={`fp-noren ${dashed ? 'is-dashed' : ''}`}>
+  <div class="fp-noren-window">
+    <div class="fp-noren-window-inner"></div>
+  </div>
+  <div class="fp-noren-cloth" style={`background: ${color}`}>
+    <div class="fp-noren-label fp-jp">{jp}</div>
+    <div class="fp-noren-label-en fp-en">{en}</div>
+    <div class="fp-noren-slits">
+      <div class="fp-noren-slit"></div>
+      <div class="fp-noren-slit"></div>
+      <div class="fp-noren-slit"></div>
+      <div class="fp-noren-slit"></div>
+    </div>
+  </div>
+  <div class="fp-noren-plate">
+    <div class="fp-noren-name">
+      <span class="fp-jp">{jp}</span>
+      <span class="fp-en fp-noren-name-en">{en}</span>
+    </div>
+    <div class="fp-mono">{sub}.fujioha.com</div>
+    <div class="fp-noren-tag fp-faint">{tag}</div>
+  </div>
+</div>

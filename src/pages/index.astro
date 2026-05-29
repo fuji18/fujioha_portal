@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import Hero from '../components/Hero.astro';
+import Sites from '../components/Sites.astro';
+import Featured from '../components/Featured.astro';
+import Alley from '../components/Alley.astro';
+import Recent from '../components/Recent.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { resolveMood } from '../lib/moods';
+
+const buildMood = resolveMood(new Date());
+---
+
+<BaseLayout>
+  <div class={`fp fp-${buildMood}`} data-mood={buildMood} data-fp>
+    <TopBar />
+    <Hero />
+    <Sites />
+    <Featured />
+    <Alley />
+    <Recent />
+    <SiteFooter />
+  </div>
+  <script>
+    import { hydratePortal } from '../scripts/client';
+    hydratePortal();
+  </script>
+</BaseLayout>

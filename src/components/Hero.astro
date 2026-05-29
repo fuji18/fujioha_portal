@@ -1,0 +1,74 @@
+---
+import Sun from './Sun.astro';
+import { MOODS, resolveMood } from '../lib/moods';
+import { todayKou } from '../lib/kou72';
+import { visitPhrase } from '../lib/visits';
+
+const now = new Date();
+const mood = resolveMood(now);
+const greeting = MOODS[mood];
+const kou = todayKou(now);
+const phrase = visitPhrase(1);
+
+const dateStr = now.toLocaleDateString('ja-JP', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  weekday: 'short',
+});
+const dateEn = now.toLocaleDateString('en-US', {
+  weekday: 'long',
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+<section class="fp-hero">
+  <Sun mood={mood} />
+  <div class="fp-hero-inner">
+    <div class="fp-hero-date">
+      <span class="fp-jp" data-date-jp>{dateStr}</span>
+      <span class="fp-faint">·</span>
+      <span class="fp-en fp-faint" data-date-en>{dateEn}</span>
+    </div>
+    <h1 class="fp-greeting">
+      <span class="fp-jp">
+        <span data-greeting-jp>{greeting.jp}</span><span class="fp-greeting-dot"
+          >。</span
+        >
+      </span>
+    </h1>
+    <p class="fp-greeting-en fp-en">
+      <span data-greeting-en>{greeting.en}</span> from <em>fujioha</em>.
+    </p>
+    <p class="fp-intro">
+      <span class="fp-jp"
+        >小さなウェブを集めた個人の場所。今のところ、北海道の歩き方と、思いついた
+        Web ゲームが住んでいます。</span
+      >
+      <span class="fp-en fp-mute">
+        A small home for two sites — a Hokkaido travel guide and a shelf of
+        little web games — by <u>@fuji</u>.
+      </span>
+    </p>
+    <div class="fp-hero-meta">
+      <span class="fp-pill fp-pill-warm">
+        <span class="fp-dot"></span>
+        <span class="fp-jp" data-visit-jp>{phrase.jp}</span>
+        <span class="fp-en fp-mute" data-visit-en-wrap
+          >· <span data-visit-en>{phrase.en}</span></span
+        >
+      </span>
+      <span class="fp-kou-inline">
+        <span class="fp-faint fp-mono" data-kou-sekki>
+          七十二候 / {kou[2]}・{kou[3]}
+        </span>
+        <span class="fp-jp" data-kou-reading>{kou[4]}</span>
+        <span class="fp-en fp-mute" data-kou-en-wrap
+          >— <span data-kou-en>{kou[5]}</span></span
+        >
+      </span>
+    </div>
+  </div>
+</section>

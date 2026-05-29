@@ -1,0 +1,49 @@
+---
+import { pickOhako } from '../lib/ohako';
+
+const pick = pickOhako(0);
+---
+
+<section class="fp-section fp-featured" data-featured>
+  <div class="fp-section-head">
+    <div>
+      <div class="fp-eyebrow">今日の十八番 · Today's signature pick</div>
+      <h2 class="fp-h2 fp-jp">訪れるたび、ちがう一本を。</h2>
+      <p class="fp-h2-en fp-en fp-mute">
+        A different favourite every time you stop by — picked from fujioha's
+        shelf.
+      </p>
+    </div>
+    <button class="fp-shuffle" data-shuffle aria-label="shuffle pick" type="button">
+      <span class="fp-shuffle-icon">↻</span>
+      <span>もう一本 / shuffle</span>
+    </button>
+  </div>
+
+  <article class="fp-pick">
+    <div class={`fp-pick-art fp-grad-${pick.img}`} data-pick-art></div>
+    <div class="fp-pick-body">
+      <div class="fp-pick-src">
+        <span class="fp-mono fp-faint" data-pick-src>{pick.src}</span>
+        <span class="fp-faint">·</span>
+        <span class="fp-jp fp-mute" data-pick-src-label>{pick.srcLabel}</span>
+      </div>
+      <h3 class="fp-pick-jp fp-jp" data-pick-jp>{pick.jp}</h3>
+      <p class="fp-pick-en fp-en" data-pick-en>{pick.en}</p>
+      <p class="fp-pick-blurb fp-jp" data-pick-blurb>{pick.blurb}</p>
+      <p class="fp-pick-blurb-en fp-en fp-mute" data-pick-blurb-en>
+        {pick.blurbEn}
+      </p>
+      <div class="fp-pick-foot">
+        <span class="fp-pick-meta fp-mono fp-faint" data-pick-meta>
+          {pick.meta}
+        </span>
+        <span class="fp-pick-cta">
+          <span class="fp-jp" data-pick-cta-jp>{pick.cta}</span>
+          <span class="fp-en" data-pick-cta-en>{pick.ctaEn}</span>
+          <span class="fp-cta-arrow">→</span>
+        </span>
+      </div>
+    </div>
+  </article>
+</section>
