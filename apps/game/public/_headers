@@ -1,0 +1,8 @@
+# Cloudflare Pages 用ヘッダ設定。
+# 自己破壊型 Service Worker は常に最新を取得させたいので no-cache にする。
+# (多くのブラウザは SW スクリプト本体の更新チェック時に HTTP キャッシュを
+#  バイパスするが、防御的に明示しておく。)
+/sw.js
+  Cache-Control: no-cache
+/service-worker.js
+  Cache-Control: no-cache

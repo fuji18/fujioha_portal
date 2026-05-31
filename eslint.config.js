@@ -29,6 +29,9 @@ export default tseslint.config(
       '**/.astro/**',
       '.steering/**',
       'docs/ideas/**',
+      // public/ はビルド処理を通らずそのまま配信される静的アセット。
+      // Service Worker など素のブラウザ JS を含むため TS 向け lint の対象外とする。
+      '**/public/**',
     ],
   }
 );
