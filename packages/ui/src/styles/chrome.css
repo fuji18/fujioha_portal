@@ -172,3 +172,20 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 560px) {
+  .pc-top-inner {
+    padding: 14px 20px;
+  }
+  .pc-footer-inner {
+    padding: 36px 20px 44px;
+  }
+  .pc-cross-card {
+    padding: 18px 18px;
+  }
+  .pc-footer-base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+}

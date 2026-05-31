@@ -493,6 +493,37 @@ body {
   }
 }
 @media (max-width: 560px) {
+  .gm-section {
+    padding: 40px 20px;
+  }
+  .gm-hero-inner {
+    padding: 60px 20px 56px;
+  }
+  .gm-title-jp {
+    font-size: 26px;
+  }
+  .gm-title-en {
+    font-size: 38px;
+  }
+  .gm-feature-body {
+    padding: 28px 22px;
+  }
+  .gm-feature-jp {
+    font-size: 30px;
+  }
+  .gm-feature-art {
+    min-height: 200px;
+  }
+  .gm-feature-glyph {
+    font-size: 140px;
+  }
+  .gm-spec {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .gm-note-card {
+    padding: 26px 22px;
+  }
   .gm-grid {
     grid-template-columns: 1fr;
   }
