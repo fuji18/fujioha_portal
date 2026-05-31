@@ -5,6 +5,8 @@ export interface Shop {
   readonly tag: string;
   readonly color: string;
   readonly dashed?: boolean;
+  /** 遷移先を明示したい場合に指定。未指定なら sub からサブドメインURLを導出する。 */
+  readonly href?: string;
 }
 
 export const SHOPS: readonly Shop[] = [
@@ -46,3 +48,19 @@ export const SHOPS: readonly Shop[] = [
     dashed: true,
   },
 ];
+
+/**
+ * 営業中(=遷移可能)の店かどうか。準備中(dashed)の暖簾は遷移先を持たない。
+ */
+export function isOpen(shop: Shop): boolean {
+  return !shop.dashed;
+}
+
+/**
+ * 暖簾の遷移先URL。準備中の店は undefined を返す。
+ * 明示的な href があればそれを優先し、なければ sub からサブドメインを導出する。
+ */
+export function shopHref(shop: Shop): string | undefined {
+  if (!isOpen(shop)) return undefined;
+  return shop.href ?? `https://${shop.sub}.fujioha.com`;
+}
