@@ -1,6 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
 import FallingField from './FallingField.astro';
-import { GAMES } from '../lib/games';
+
+const games = await getCollection('games');
 ---
 
 <section class="gm-hero">
@@ -23,7 +25,7 @@ import { GAMES } from '../lib/games';
       >
     </p>
     <div class="gm-hero-meta">
-      <span class="gm-chip fp-mono">{GAMES.length} games</span>
+      <span class="gm-chip fp-mono">{games.length} games</span>
       <span class="gm-chip fp-mono">no install · ブラウザで完結</span>
       <span class="gm-chip fp-mono">free</span>
     </div>

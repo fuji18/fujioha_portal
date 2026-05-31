@@ -4,10 +4,22 @@ import type { Game } from '../lib/games';
 
 type Props = Game;
 
-const { jp, en, genre, genreEn, time, tag, icon, hue } = Astro.props;
+const { jp, en, genre, genreEn, time, tag, icon, hue, url, status } = Astro.props;
+
+const playable = status === 'published' && !!url && tag !== 'wip';
+const href = playable ? url! : '#';
+const label = tag === 'wip' ? '準備中' : playable ? '遊ぶ' : '準備中';
+const labelEn = tag === 'wip' ? 'Coming soon' : playable ? 'Play' : 'Coming soon';
+// 外部スポークは別オリジンなので noopener/noreferrer/外部リンク扱い
+const isExternal = playable && url!.startsWith('http');
 ---
 
-<a class="gm-card" href="#">
+<a
+  class="gm-card"
+  href={href}
+  aria-disabled={!playable}
+  {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+>
   <div class="gm-card-art" style={`--hue: ${hue}`}>
     <GameIcon kind={icon} hue={hue} />
     {
@@ -30,10 +42,8 @@ const { jp, en, genre, genreEn, time, tag, icon, hue } = Astro.props;
     </div>
     <div class="gm-card-play">
       <span class="gm-play-icon">▶</span>
-      <span class="fp-jp">{tag === 'wip' ? '準備中' : '遊ぶ'}</span>
-      <span class="fp-en fp-mute">
-        {tag === 'wip' ? 'Coming soon' : 'Play'}
-      </span>
+      <span class="fp-jp">{label}</span>
+      <span class="fp-en fp-mute">{labelEn}</span>
     </div>
   </div>
 </a>

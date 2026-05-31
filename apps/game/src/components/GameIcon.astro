@@ -64,3 +64,13 @@ const { kind, hue } = Astro.props;
     </svg>
   )
 }
+{
+  kind === 'palette' && (
+    <svg viewBox="0 0 120 120" class="gm-icon-svg" aria-hidden="true">
+      <rect x="30" y="30" width="26" height="26" rx="4" fill={hue} opacity="0.45" />
+      <rect x="64" y="30" width="26" height="26" rx="4" fill={hue} opacity="0.75" />
+      <rect x="30" y="64" width="26" height="26" rx="4" fill={hue} />
+      <rect x="64" y="64" width="26" height="26" rx="4" fill={hue} opacity="0.6" />
+    </svg>
+  )
+}

@@ -1,0 +1,14 @@
+{
+  "id": "kanji-drop",
+  "jp": "Kanji Drop",
+  "en": "Falling-kanji puzzle",
+  "genre": "パズル",
+  "genreEn": "Puzzle",
+  "time": "~1 min",
+  "tag": "new",
+  "icon": "kanji",
+  "hue": "#f6d472",
+  "url": null,
+  "status": "draft",
+  "featured": true
+}

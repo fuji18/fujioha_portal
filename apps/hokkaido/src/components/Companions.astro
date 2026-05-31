@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHead from './SectionHead.astro';
+
+const entries = await getCollection('companions', ({ data }) => data.status === 'published');
+const companions = entries
+  .map((e) => e.data)
+  .sort((a, b) => {
+    if (a.publishedAt && b.publishedAt) {
+      return b.publishedAt.localeCompare(a.publishedAt);
+    }
+    return 0;
+  });
+---
+
+{
+  companions.length > 0 && (
+    <section class="hk-section hk-companions">
+      <SectionHead
+        eyebrow="姉妹サイト · Companion sites"
+        jp="関連するもう一冊。"
+        en="Sites that walk beside this one."
+      />
+      <ul class="hk-companions-list">
+        {companions.map((c) => (
+          <li class="hk-companion" style={`--hue: ${c.hue}`}>
+            <a
+              class="hk-companion-link"
+              href={c.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div class="hk-companion-body">
+                <h3 class="hk-companion-jp fp-jp">{c.jp}</h3>
+                <p class="hk-companion-en fp-en fp-mute">{c.en}</p>
+                <p class="hk-companion-lead fp-jp">{c.lead}</p>
+                <p class="hk-companion-lead-en fp-en fp-mute">{c.leadEn}</p>
+              </div>
+              <span class="hk-companion-go fp-mono">visit →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .hk-companions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  }
+  .hk-companion {
+    --hue: #7fb0d6;
+  }
+  .hk-companion-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid color-mix(in oklab, var(--hue) 30%, transparent);
+    border-radius: 0.75rem;
+    background: color-mix(in oklab, var(--hue) 6%, transparent);
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .hk-companion-link:hover,
+  .hk-companion-link:focus-visible {
+    background: color-mix(in oklab, var(--hue) 12%, transparent);
+    transform: translateY(-1px);
+  }
+  .hk-companion-jp {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+  .hk-companion-en {
+    margin: 0;
+  }
+  .hk-companion-lead {
+    margin: 0.25rem 0 0;
+  }
+  .hk-companion-lead-en {
+    margin: 0;
+  }
+  .hk-companion-go {
+    align-self: flex-end;
+    color: var(--hue);
+  }
+</style>

@@ -1,0 +1,14 @@
+{
+  "id": "prefecture-quiz",
+  "jp": "47都道府県あて",
+  "en": "Guess the prefecture",
+  "genre": "クイズ",
+  "genreEn": "Quiz",
+  "time": "~5 min",
+  "tag": null,
+  "icon": "map",
+  "hue": "#7fc99a",
+  "url": null,
+  "status": "draft",
+  "featured": false
+}

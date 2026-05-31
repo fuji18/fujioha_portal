@@ -1,7 +1,24 @@
 ---
+import { getCollection } from 'astro:content';
 import SectionHead from './SectionHead.astro';
 import GameCard from './GameCard.astro';
-import { GAMES, GENRES } from '../lib/games';
+import { GENRES } from '../lib/games';
+
+const entries = await getCollection('games');
+const games = entries
+  .map((entry) => entry.data)
+  .sort((a, b) => {
+    // published を先頭、次に featured、次に publishedAt 降順
+    if (a.status !== b.status) {
+      const rank = { published: 0, draft: 1, archived: 2 } as const;
+      return rank[a.status] - rank[b.status];
+    }
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    if (a.publishedAt && b.publishedAt) {
+      return b.publishedAt.localeCompare(a.publishedAt);
+    }
+    return 0;
+  });
 ---
 
 <section class="gm-section">
@@ -25,6 +42,6 @@ import { GAMES, GENRES } from '../lib/games';
     </div>
   </SectionHead>
   <div class="gm-grid">
-    {GAMES.map((g) => <GameCard {...g} />)}
+    {games.map((g) => <GameCard {...g} />)}
   </div>
 </section>
