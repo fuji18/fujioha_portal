@@ -621,9 +621,19 @@ button {
 
 .fp-noren {
   position: relative;
+  display: block;
   height: 280px;
-  cursor: pointer;
+  cursor: default;
   padding-top: 26px;
+  color: inherit;
+  text-decoration: none;
+}
+.fp-noren.is-open {
+  cursor: pointer;
+}
+.fp-noren:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
 }
 .fp-noren-window {
   position: absolute;
@@ -631,16 +641,18 @@ button {
   border: 1px solid var(--rule);
   background: linear-gradient(180deg, #fff6e1 0%, #f5e9d8 100%);
   overflow: hidden;
+  color: rgba(31, 26, 20, 0.9);
 }
 .fp[data-mood='night'] .fp-noren-window {
   background: linear-gradient(180deg, #2a2630 0%, #1a1620 100%);
   border-color: #3a3540;
+  color: rgba(222, 216, 226, 0.85);
 }
-.fp-noren-window-inner {
+.fp-noren-scene {
   position: absolute;
-  inset: 14px;
-  border: 1px dashed var(--rule);
-  opacity: 0.5;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 .fp-noren-cloth {
   position: absolute;

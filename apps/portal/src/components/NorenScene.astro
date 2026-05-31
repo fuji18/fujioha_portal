@@ -1,0 +1,153 @@
+---
+// 暖簾の奥にのぞく「店の中」の情景。sub ごとにテーマを描き分ける。
+// 作風は SiteIllustration.astro に合わせ、単純な矩形・パスで構成する。
+// 線画は currentColor でライト/ナイト両モードに追従し、
+// アクセント色のみ両モードで視認できる固定色を使う。
+interface Props {
+  sub: string;
+}
+
+const { sub } = Astro.props;
+
+// NOTE: lib/alley.ts の SHOPS に新しい sub を追加して固有の情景を持たせたい場合は、
+// このマップにも対応を追加すること。未登録の sub は 'coming'(準備中)情景になる。
+type Scene = 'hokkaido' | 'game' | 'about' | 'journal' | 'coming';
+const known: Record<string, Scene> = {
+  hokkaido: 'hokkaido',
+  game: 'game',
+  about: 'about',
+  journal: 'journal',
+};
+const scene: Scene = known[sub] ?? 'coming';
+---
+
+<svg
+  class="fp-noren-scene"
+  viewBox="0 0 120 140"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+>
+  {/* 床のライン: 全情景共通で「奥行き」を与える */}
+  <line
+    x1="0"
+    y1="112"
+    x2="120"
+    y2="112"
+    stroke="currentColor"
+    stroke-width="1"
+    opacity="0.35"
+  />
+
+  {
+    scene === 'hokkaido' && (
+      <g>
+        <circle cx="92" cy="40" r="16" fill="#c96442" opacity="0.85" />
+        <path
+          d="M0 112 L24 70 L40 86 L60 52 L82 84 L104 60 L120 88 L120 112 Z"
+          fill="currentColor"
+          opacity="0.16"
+        />
+        <path
+          d="M0 112 L24 70 L40 86 L60 52 L82 84 L104 60 L120 88"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1"
+          opacity="0.5"
+        />
+      </g>
+    )
+  }
+
+  {
+    scene === 'game' && (
+      <g>
+        <rect x="20" y="30" width="12" height="12" fill="#c96442" />
+        <rect x="32" y="30" width="12" height="12" fill="#c96442" />
+        <rect x="32" y="42" width="12" height="12" fill="#c96442" />
+        <rect x="74" y="44" width="12" height="12" fill="#f6d472" />
+        <rect x="86" y="44" width="12" height="12" fill="#f6d472" />
+        <rect x="44" y="74" width="12" height="12" fill="#5aa37a" />
+        <rect x="44" y="86" width="12" height="12" fill="#5aa37a" />
+        <rect x="56" y="86" width="12" height="12" fill="#5aa37a" />
+        <rect x="84" y="88" width="12" height="12" fill="#8a9bbf" />
+        <rect x="96" y="88" width="12" height="12" fill="#8a9bbf" />
+      </g>
+    )
+  }
+
+  {
+    scene === 'about' && (
+      <g>
+        {/* カウンター越しの店主のシルエット */}
+        <circle cx="60" cy="50" r="13" fill="currentColor" opacity="0.55" />
+        <path
+          d="M40 92 Q40 66 60 66 Q80 66 80 92 Z"
+          fill="currentColor"
+          opacity="0.55"
+        />
+        {/* カウンター */}
+        <rect
+          x="14"
+          y="92"
+          width="92"
+          height="14"
+          fill="currentColor"
+          opacity="0.22"
+        />
+        <line
+          x1="14"
+          y1="92"
+          x2="106"
+          y2="92"
+          stroke="currentColor"
+          stroke-width="1"
+          opacity="0.5"
+        />
+      </g>
+    )
+  }
+
+  {
+    scene === 'journal' && (
+      <g>
+        {/* 開いた帳面 */}
+        <path
+          d="M60 44 Q44 36 24 40 L24 96 Q44 92 60 100 Z"
+          fill="currentColor"
+          opacity="0.1"
+          stroke="currentColor"
+          stroke-width="1"
+        />
+        <path
+          d="M60 44 Q76 36 96 40 L96 96 Q76 92 60 100 Z"
+          fill="currentColor"
+          opacity="0.1"
+          stroke="currentColor"
+          stroke-width="1"
+        />
+        <line x1="60" y1="44" x2="60" y2="100" stroke="currentColor" stroke-width="1" opacity="0.5" />
+        {[56, 66, 76].map((y) => (
+          <g>
+            <line x1="30" y1={y} x2="54" y2={y - 2} stroke="currentColor" stroke-width="1" opacity="0.35" />
+            <line x1="66" y1={y - 2} x2="90" y2={y} stroke="currentColor" stroke-width="1" opacity="0.35" />
+          </g>
+        ))}
+      </g>
+    )
+  }
+
+  {
+    scene === 'coming' && (
+      <g opacity="0.5">
+        {/* 吊り電球 */}
+        <line x1="60" y1="0" x2="60" y2="30" stroke="currentColor" stroke-width="1" />
+        <circle cx="60" cy="36" r="6" fill="none" stroke="currentColor" stroke-width="1.5" />
+        {/* 脚立 */}
+        <line x1="44" y1="112" x2="54" y2="74" stroke="currentColor" stroke-width="1.5" />
+        <line x1="76" y1="112" x2="66" y2="74" stroke="currentColor" stroke-width="1.5" />
+        <line x1="50" y1="92" x2="70" y2="92" stroke="currentColor" stroke-width="1.5" />
+        <line x1="53" y1="80" x2="67" y2="80" stroke="currentColor" stroke-width="1.5" />
+      </g>
+    )
+  }
+</svg>

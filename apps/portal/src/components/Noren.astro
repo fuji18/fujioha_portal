@@ -1,19 +1,28 @@
 ---
-interface Props {
-  jp: string;
-  en: string;
-  sub: string;
-  tag: string;
-  color: string;
-  dashed?: boolean;
-}
+import NorenScene from './NorenScene.astro';
+import { isOpen, shopHref, type Shop } from '../lib/alley';
 
-const { jp, en, sub, tag, color, dashed = false } = Astro.props;
+type Props = Shop;
+
+const shop = Astro.props;
+const { jp, en, sub, tag, color, dashed = false } = shop;
+
+const open = isOpen(shop);
+const href = shopHref(shop);
+
+// 営業中はリンク、準備中は非リンク要素として描画する。
+const Wrapper = open ? 'a' : 'div';
 ---
 
-<div class={`fp-noren ${dashed ? 'is-dashed' : ''}`}>
+<Wrapper
+  class={['fp-noren', dashed && 'is-dashed', open && 'is-open']
+    .filter(Boolean)
+    .join(' ')}
+  href={open ? href : undefined}
+  aria-label={open ? `${jp} (${en}) — ${sub}.fujioha.com へ` : undefined}
+>
   <div class="fp-noren-window">
-    <div class="fp-noren-window-inner"></div>
+    <NorenScene sub={sub} />
   </div>
   <div class="fp-noren-cloth" style={`background: ${color}`}>
     <div class="fp-noren-label fp-jp">{jp}</div>
@@ -33,4 +42,4 @@ const { jp, en, sub, tag, color, dashed = false } = Astro.props;
     <div class="fp-mono">{sub}.fujioha.com</div>
     <div class="fp-noren-tag fp-faint">{tag}</div>
   </div>
-</div>
+</Wrapper>
