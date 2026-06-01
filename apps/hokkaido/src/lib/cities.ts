@@ -1,15 +1,13 @@
 export interface City {
   readonly jp: string;
   readonly en: string;
+  /** 公開済み記事数。0 のときは「準備中」として表示する。 */
   readonly n: number;
   readonly note: string;
 }
 
+// 当面は札幌・千歳を中心に書く。記事は準備中（公開 0 本）。
 export const HOK_CITIES: readonly City[] = [
-  { jp: '札幌', en: 'Sapporo', n: 5, note: '街と山が15分で行き来できる街' },
-  { jp: '函館', en: 'Hakodate', n: 3, note: '朝市と坂と、海のにおい' },
-  { jp: '小樽', en: 'Otaru', n: 2, note: '運河は早朝がいちばん静か' },
-  { jp: '知床', en: 'Shiretoko', n: 2, note: '人より熊の数が多い半島' },
-  { jp: '富良野', en: 'Furano', n: 1, note: '夏の丘、冬の粉雪' },
-  { jp: '釧路', en: 'Kushiro', n: 1, note: '湿原と霧と、炉端' },
+  { jp: '札幌', en: 'Sapporo', n: 0, note: '街と山が15分で行き来できる街' },
+  { jp: '千歳', en: 'Chitose', n: 0, note: '新千歳空港のある、北海道の玄関口' },
 ];

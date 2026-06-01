@@ -15,7 +15,7 @@ import { HOK_CITIES } from '../lib/cities';
         <a class="hk-city" href="#">
           <div class="hk-city-top">
             <span class="hk-city-jp fp-jp">{c.jp}</span>
-            <span class="hk-city-n fp-mono">{c.n}</span>
+            <span class="hk-city-n fp-mono">{c.n > 0 ? c.n : '準備中'}</span>
           </div>
           <div class="hk-city-en fp-en">{c.en}</div>
           <div class="hk-city-note fp-jp fp-mute">{c.note}</div>

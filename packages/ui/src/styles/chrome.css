@@ -176,6 +176,26 @@
 @media (max-width: 560px) {
   .pc-top-inner {
     padding: 14px 20px;
+    gap: 12px;
+  }
+  /* パンくずを縮め、戻るリンクの英語併記を隠して横溢れを防ぐ */
+  .pc-crumb {
+    gap: 8px;
+    font-size: 12px;
+    min-width: 0;
+  }
+  .pc-crumb-here {
+    gap: 6px;
+  }
+  .pc-mark-name {
+    font-size: 15px;
+  }
+  .pc-top-right .fp-en {
+    display: none;
+  }
+  .pc-link {
+    font-size: 12px;
+    white-space: nowrap;
   }
   .pc-footer-inner {
     padding: 36px 20px 44px;
@@ -187,5 +207,12 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 14px;
+  }
+}
+
+/* 小型端末ではサブサイト和名を省略し「●fujioha / sub」のみに */
+@media (max-width: 400px) {
+  .pc-crumb-jp {
+    display: none;
   }
 }

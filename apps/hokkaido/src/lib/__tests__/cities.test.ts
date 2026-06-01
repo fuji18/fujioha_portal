@@ -5,12 +5,16 @@ import { HOK_RECENT } from '../recent';
 import { HOK_FEATURED } from '../featured';
 
 describe('hokkaido catalog', () => {
-  it('lists six cities with consistent fields', () => {
-    expect(HOK_CITIES).toHaveLength(6);
+  it('focuses on Sapporo and Chitose with consistent fields', () => {
+    expect(HOK_CITIES).toHaveLength(2);
+    const jp = HOK_CITIES.map((c) => c.jp);
+    expect(jp).toContain('札幌');
+    expect(jp).toContain('千歳');
     for (const c of HOK_CITIES) {
       expect(c.jp.length).toBeGreaterThan(0);
       expect(c.en.length).toBeGreaterThan(0);
-      expect(c.n).toBeGreaterThan(0);
+      // 記事数。準備中（0）も許容する。
+      expect(c.n).toBeGreaterThanOrEqual(0);
     }
   });
 
