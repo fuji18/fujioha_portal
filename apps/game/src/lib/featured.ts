@@ -8,6 +8,8 @@ export interface FeaturedGame {
   readonly time: string;
   readonly controls: string;
   readonly hue: string;
+  /** 公開状態。draft の間は「準備中 / Coming soon」として表示し、プレイ不可。 */
+  readonly status: 'published' | 'draft';
 }
 
 export const GAME_FEATURED: FeaturedGame = {
@@ -21,4 +23,5 @@ export const GAME_FEATURED: FeaturedGame = {
   time: '~1 min',
   controls: '← → ↓ / tap',
   hue: '#f6d472',
+  status: 'draft',
 };

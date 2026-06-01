@@ -4,13 +4,14 @@ import MiniBlocks from './MiniBlocks.astro';
 import { GAME_FEATURED } from '../lib/featured';
 
 const f = GAME_FEATURED;
+const isDraft = f.status === 'draft';
 ---
 
 <section class="gm-section">
   <SectionHead
-    eyebrow="新作 · Now playing"
+    eyebrow={isDraft ? '近日公開 · Coming soon' : '新作 · Now playing'}
     jp="今月の一本。"
-    en="This month's release."
+    en={isDraft ? 'Coming soon.' : "This month's release."}
   />
   <article class="gm-feature">
     <div class="gm-feature-art" style={`--hue: ${f.hue}`}>
@@ -20,7 +21,7 @@ const f = GAME_FEATURED;
       </div>
     </div>
     <div class="gm-feature-body">
-      <div class="gm-feature-tag">NEW</div>
+      <div class="gm-feature-tag">{isDraft ? '準備中' : 'NEW'}</div>
       <h3 class="gm-feature-jp">{f.jp}</h3>
       <p class="gm-feature-sub fp-jp">{f.sub}</p>
       <p class="gm-feature-en fp-en">{f.en}</p>
@@ -42,10 +43,10 @@ const f = GAME_FEATURED;
           <div class="gm-spec-value fp-jp">{f.controls}</div>
         </div>
       </div>
-      <button class="gm-play" type="button">
+      <button class="gm-play" type="button" disabled={isDraft} aria-disabled={isDraft}>
         <span class="gm-play-icon">▶</span>
-        <span class="fp-jp">今すぐ遊ぶ</span>
-        <span class="fp-en">Play now</span>
+        <span class="fp-jp">{isDraft ? '準備中' : '今すぐ遊ぶ'}</span>
+        <span class="fp-en">{isDraft ? 'Coming soon' : 'Play now'}</span>
       </button>
     </div>
   </article>

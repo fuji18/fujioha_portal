@@ -21,15 +21,20 @@ describe('hokkaido catalog', () => {
     }
   });
 
-  it('lists five recent articles in descending date order', () => {
-    expect(HOK_RECENT).toHaveLength(5);
+  it('keeps recent articles in descending date order when present', () => {
+    // 仮記事は本番整備で削除済み。記事が追加された場合は降順であることを担保する。
     const dates = HOK_RECENT.map((a) => a.date);
     const sorted = [...dates].sort().reverse();
     expect(dates).toEqual(sorted);
   });
 
-  it('has a non-empty featured article', () => {
-    expect(HOK_FEATURED.jp.length).toBeGreaterThan(0);
-    expect(HOK_FEATURED.en.length).toBeGreaterThan(0);
+  it('exposes a valid featured article or null', () => {
+    // 仮の特集記事は削除済み（null）。設定する場合は必須項目を満たすこと。
+    if (HOK_FEATURED !== null) {
+      expect(HOK_FEATURED.jp.length).toBeGreaterThan(0);
+      expect(HOK_FEATURED.en.length).toBeGreaterThan(0);
+    } else {
+      expect(HOK_FEATURED).toBeNull();
+    }
   });
 });

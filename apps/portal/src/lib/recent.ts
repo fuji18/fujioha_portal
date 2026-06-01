@@ -9,45 +9,22 @@ export interface RecentItem {
   readonly kind: RecentKind;
 }
 
+// 仮の更新項目は削除。実際に公開済みのコンテンツのみを掲載する。
 export const RECENT_ITEMS: readonly RecentItem[] = [
   {
-    date: '2d',
-    src: 'hokkaido',
-    srcJp: '北海道の歩き方',
-    jp: '函館朝市、地元民の歩き方',
-    en: 'Hakodate morning market, the local way',
-    kind: 'post',
-  },
-  {
-    date: '3d',
+    date: 'new',
     src: 'game',
     srcJp: 'Web ゲーム',
-    jp: '新作 · Kanji Drop を公開しました',
-    en: 'New release · Kanji Drop is live',
+    jp: '新作 · カラーセンステストを公開しました',
+    en: 'New release · Color Sense is live',
     kind: 'release',
   },
   {
-    date: '1w',
+    date: 'new',
     src: 'hokkaido',
     srcJp: '北海道の歩き方',
-    jp: '雨の札幌で行きたいラーメン10軒',
-    en: 'Sapporo ramen for rainy days',
-    kind: 'post',
-  },
-  {
-    date: '2w',
-    src: 'hokkaido',
-    srcJp: '北海道の歩き方',
-    jp: '知床の朝、ヒグマに会わない歩き方',
-    en: 'Shiretoko mornings, bear-free',
-    kind: 'post',
-  },
-  {
-    date: '3w',
-    src: 'game',
-    srcJp: 'Web ゲーム',
-    jp: 'ミニ · 札幌時計台 1分タイマー',
-    en: '60-second clock-tower mini',
+    jp: '姉妹サイト · 千歳〜札幌ガイドを公開',
+    en: 'Companion site · Chitose–Sapporo guide is live',
     kind: 'release',
   },
 ];

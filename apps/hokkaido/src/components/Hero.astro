@@ -1,6 +1,11 @@
 ---
 import HokkaidoScene from './HokkaidoScene.astro';
 import { HOK_CITIES } from '../lib/cities';
+import { HOK_RECENT } from '../lib/recent';
+import { HOK_FEATURED } from '../lib/featured';
+
+// 実在する記事数（特集 + 一覧）。仮記事削除後は 0。
+const guideCount = HOK_RECENT.length + (HOK_FEATURED ? 1 : 0);
 ---
 
 <section class="hk-hero">
@@ -22,8 +27,8 @@ import { HOK_CITIES } from '../lib/cities';
     </p>
     <div class="hk-hero-meta">
       <span class="hk-chip fp-mono">{HOK_CITIES.length} 都市 · cities</span>
-      <span class="hk-chip fp-mono">14 記事 · guides</span>
-      <span class="hk-chip fp-mono">今週更新 · updated this week</span>
+      <span class="hk-chip fp-mono">{guideCount} 記事 · guides</span>
+      <span class="hk-chip fp-mono">準備中 · coming soon</span>
     </div>
   </div>
 </section>

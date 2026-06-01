@@ -3,30 +3,34 @@ import SectionHead from './SectionHead.astro';
 import { HOK_RECENT } from '../lib/recent';
 ---
 
-<section class="hk-section">
-  <SectionHead
-    eyebrow="最近の記事 · Recent guides"
-    jp="新しく書いたもの。"
-    en="Lately."
-  >
-    <a slot="right" class="pc-link fp-mono" href="#">すべて見る / All →</a>
-  </SectionHead>
-  <ol class="hk-list">
-    {
-      HOK_RECENT.map((a) => (
-        <li class="hk-list-item">
-          <span class="hk-list-date fp-mono fp-faint">{a.date}</span>
-          <span class="hk-list-tags">
-            <span class="hk-tag">{a.city}</span>
-            <span class="hk-tag hk-tag-soft">{a.theme}</span>
-          </span>
-          <span class="hk-list-title">
-            <span class="hk-list-jp fp-jp">{a.jp}</span>
-            <span class="hk-list-en fp-en fp-mute">{a.en}</span>
-          </span>
-          <span class="hk-list-read fp-mono fp-faint">{a.read}</span>
-        </li>
-      ))
-    }
-  </ol>
-</section>
+{
+  HOK_RECENT.length > 0 && (
+    <section class="hk-section">
+      <SectionHead
+        eyebrow="最近の記事 · Recent guides"
+        jp="新しく書いたもの。"
+        en="Lately."
+      >
+        <a slot="right" class="pc-link fp-mono" href="#">
+          すべて見る / All →
+        </a>
+      </SectionHead>
+      <ol class="hk-list">
+        {HOK_RECENT.map((a) => (
+          <li class="hk-list-item">
+            <span class="hk-list-date fp-mono fp-faint">{a.date}</span>
+            <span class="hk-list-tags">
+              <span class="hk-tag">{a.city}</span>
+              <span class="hk-tag hk-tag-soft">{a.theme}</span>
+            </span>
+            <span class="hk-list-title">
+              <span class="hk-list-jp fp-jp">{a.jp}</span>
+              <span class="hk-list-en fp-en fp-mute">{a.en}</span>
+            </span>
+            <span class="hk-list-read fp-mono fp-faint">{a.read}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}

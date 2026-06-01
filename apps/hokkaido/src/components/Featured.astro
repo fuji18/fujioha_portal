@@ -6,32 +6,38 @@ import { HOK_FEATURED } from '../lib/featured';
 const f = HOK_FEATURED;
 ---
 
-<section class="hk-section">
-  <SectionHead
-    eyebrow="今週の一本 · This week's guide"
-    jp="まずは、ここから。"
-    en="Start here."
-  />
-  <article class="hk-feature">
-    <div class="hk-feature-art">
-      <FeatureArt />
-    </div>
-    <div class="hk-feature-body">
-      <div class="hk-feature-meta">
-        <span class="hk-tag">{f.city}</span>
-        <span class="fp-mono fp-faint">{f.read} read · {f.date}</span>
-      </div>
-      <h3 class="hk-feature-jp fp-jp">{f.jp}</h3>
-      <p class="hk-feature-en fp-en">{f.en}</p>
-      <p class="hk-feature-lead">
-        <span class="fp-jp">{f.lead}</span>
-        <span class="fp-en fp-mute">{f.leadEn}</span>
-      </p>
-      <a class="hk-readmore" href="#">
-        <span class="fp-jp">続きを読む</span>
-        <span class="fp-en fp-mute">Read the guide</span>
-        <span class="pc-arrow">→</span>
-      </a>
-    </div>
-  </article>
-</section>
+{
+  f && (
+    <section class="hk-section">
+      <SectionHead
+        eyebrow="今週の一本 · This week's guide"
+        jp="まずは、ここから。"
+        en="Start here."
+      />
+      <article class="hk-feature">
+        <div class="hk-feature-art">
+          <FeatureArt />
+        </div>
+        <div class="hk-feature-body">
+          <div class="hk-feature-meta">
+            <span class="hk-tag">{f.city}</span>
+            <span class="fp-mono fp-faint">
+              {f.read} read · {f.date}
+            </span>
+          </div>
+          <h3 class="hk-feature-jp fp-jp">{f.jp}</h3>
+          <p class="hk-feature-en fp-en">{f.en}</p>
+          <p class="hk-feature-lead">
+            <span class="fp-jp">{f.lead}</span>
+            <span class="fp-en fp-mute">{f.leadEn}</span>
+          </p>
+          <a class="hk-readmore" href="#">
+            <span class="fp-jp">続きを読む</span>
+            <span class="fp-en fp-mute">Read the guide</span>
+            <span class="pc-arrow">→</span>
+          </a>
+        </div>
+      </article>
+    </section>
+  )
+}

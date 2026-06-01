@@ -2,31 +2,35 @@
 import { RECENT_ITEMS } from '../lib/recent';
 ---
 
-<section class="fp-section fp-recent">
-  <div class="fp-section-head">
-    <div>
-      <div class="fp-eyebrow">最近の更新 · Recent across fujioha</div>
-      <h2 class="fp-h2 fp-jp">サブドメインで起きていること。</h2>
-      <p class="fp-h2-en fp-en fp-mute">
-        Whenever a site updates, it lands here automatically.
-      </p>
-    </div>
-    <a class="fp-link" href="#">RSS / Atom →</a>
-  </div>
-  <ol class="fp-feed">
-    {
-      RECENT_ITEMS.map((it) => (
-        <li class="fp-feed-item">
-          <span class="fp-feed-date fp-mono fp-faint">{it.date}</span>
-          <span class={`fp-feed-kind fp-feed-kind-${it.kind}`}>
-            <span class="fp-jp">{it.kind === 'post' ? '記事' : '公開'}</span>
-            <span class="fp-en">{it.kind === 'post' ? 'post' : 'live'}</span>
-          </span>
-          <span class="fp-feed-src fp-mono fp-faint">{it.src}.</span>
-          <span class="fp-feed-title fp-jp">{it.jp}</span>
-          <span class="fp-feed-title-en fp-en fp-mute">{it.en}</span>
-        </li>
-      ))
-    }
-  </ol>
-</section>
+{
+  RECENT_ITEMS.length > 0 && (
+    <section class="fp-section fp-recent">
+      <div class="fp-section-head">
+        <div>
+          <div class="fp-eyebrow">最近の更新 · Recent across fujioha</div>
+          <h2 class="fp-h2 fp-jp">サブドメインで起きていること。</h2>
+          <p class="fp-h2-en fp-en fp-mute">
+            Whenever a site updates, it lands here automatically.
+          </p>
+        </div>
+        <a class="fp-link" href="#">
+          RSS / Atom →
+        </a>
+      </div>
+      <ol class="fp-feed">
+        {RECENT_ITEMS.map((it) => (
+          <li class="fp-feed-item">
+            <span class="fp-feed-date fp-mono fp-faint">{it.date}</span>
+            <span class={`fp-feed-kind fp-feed-kind-${it.kind}`}>
+              <span class="fp-jp">{it.kind === 'post' ? '記事' : '公開'}</span>
+              <span class="fp-en">{it.kind === 'post' ? 'post' : 'live'}</span>
+            </span>
+            <span class="fp-feed-src fp-mono fp-faint">{it.src}.</span>
+            <span class="fp-feed-title fp-jp">{it.jp}</span>
+            <span class="fp-feed-title-en fp-en fp-mute">{it.en}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
