@@ -38,11 +38,17 @@ const pick = pickOhako(0);
         <span class="fp-pick-meta fp-mono fp-faint" data-pick-meta>
           {pick.meta}
         </span>
-        <span class="fp-pick-cta">
+        <a
+          class="fp-pick-cta"
+          href={pick.href}
+          data-pick-cta
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <span class="fp-jp" data-pick-cta-jp>{pick.cta}</span>
           <span class="fp-en" data-pick-cta-en>{pick.ctaEn}</span>
           <span class="fp-cta-arrow">→</span>
-        </span>
+        </a>
       </div>
     </div>
   </article>

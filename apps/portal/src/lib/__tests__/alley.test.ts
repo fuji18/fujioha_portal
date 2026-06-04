@@ -61,9 +61,10 @@ describe('shopHref', () => {
     expect(shopHref(custom)).toBe('https://fujioha.com/about');
   });
 
-  it('produces a usable URL for every live shop in SHOPS', () => {
+  it('produces a usable destination for every live shop in SHOPS', () => {
+    // 外部サブドメイン（https://）またはポータル内ページ（/path）のいずれか。
     for (const s of SHOPS.filter(isOpen)) {
-      expect(shopHref(s)).toMatch(/^https?:\/\//);
+      expect(shopHref(s)).toMatch(/^(https?:\/\/|\/)/);
     }
   });
 });

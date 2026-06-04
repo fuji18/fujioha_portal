@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { resolveMood } from '../lib/moods';
+
+const buildMood = resolveMood(new Date());
+---
+
+<BaseLayout title="fujioha.com — Journal / 日誌">
+  <div class={`fp fp-${buildMood}`} data-mood={buildMood} data-fp>
+    <TopBar />
+
+    <section class="fp-section">
+      <div class="fp-section-head">
+        <div>
+          <div class="fp-eyebrow">Journal · 日誌</div>
+          <h2 class="fp-h2 fp-jp">作りながら、書いていく。</h2>
+          <p class="fp-h2-en fp-en fp-mute">
+            Notes from building this little corner of the web.
+          </p>
+        </div>
+      </div>
+
+      <p class="fp-intro">
+        <span class="fp-jp">
+          サイトをつくる過程や、考えていることの記録です。まだ準備中。最初の一篇を書いたら、ここに並べていきます。
+        </span>
+        <span class="fp-en">
+          A place for notes on making these sites. Still getting set up — the
+          first entries will land here soon.
+        </span>
+      </p>
+
+      <div class="fp-journal-empty fp-mono fp-faint">準備中 · coming soon</div>
+    </section>
+
+    <SiteFooter />
+  </div>
+  <script>
+    import { hydratePortal } from '../scripts/client';
+    hydratePortal();
+  </script>
+</BaseLayout>
+
+<style>
+  .fp-journal-empty {
+    margin-top: 32px;
+    padding: 28px 24px;
+    border: 1px dashed var(--rule);
+    border-radius: 4px;
+    font-size: 13px;
+    text-align: center;
+  }
+</style>

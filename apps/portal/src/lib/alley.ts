@@ -38,6 +38,7 @@ export const SHOPS: readonly Shop[] = [
     sub: 'about',
     tag: '@fuji',
     color: '#3e3a32',
+    href: '/about',
   },
   {
     jp: '日誌',
@@ -45,7 +46,7 @@ export const SHOPS: readonly Shop[] = [
     sub: 'journal',
     tag: 'notes',
     color: '#5a6b4a',
-    dashed: true,
+    href: '/journal',
   },
 ];
 

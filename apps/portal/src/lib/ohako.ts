@@ -16,6 +16,7 @@ export interface OhakoPick {
   readonly cta: string;
   readonly ctaEn: string;
   readonly img: GradientKey;
+  readonly href: string;
 }
 
 // 仮コンテンツの十八番は削除。実際に公開済みのコンテンツのみを掲載する。
@@ -31,6 +32,7 @@ export const OHAKO_PICKS: readonly OhakoPick[] = [
     cta: '今すぐ遊ぶ',
     ctaEn: 'Play now',
     img: 'gradient2',
+    href: 'https://color-sense.fujioha.com',
   },
   {
     src: 'chitose-sapporo.fujioha.com',
@@ -43,6 +45,7 @@ export const OHAKO_PICKS: readonly OhakoPick[] = [
     cta: 'サイトへ',
     ctaEn: 'Visit',
     img: 'gradient1',
+    href: 'https://chitose-sapporo.fujioha.com',
   },
 ];
 

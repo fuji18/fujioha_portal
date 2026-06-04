@@ -108,6 +108,8 @@ function renderPick(root: HTMLElement, pick: OhakoPick): void {
   setText('[data-pick-meta]', pick.meta);
   setText('[data-pick-cta-jp]', pick.cta);
   setText('[data-pick-cta-en]', pick.ctaEn);
+  const cta = root.querySelector<HTMLAnchorElement>('[data-pick-cta]');
+  if (cta) cta.href = pick.href;
 }
 
 function nextPick(current: OhakoPick): OhakoPick {

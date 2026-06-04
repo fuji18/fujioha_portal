@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { resolveMood } from '../lib/moods';
+
+const buildMood = resolveMood(new Date());
+---
+
+<BaseLayout title="fujioha.com — About / ふじおはについて">
+  <div class={`fp fp-${buildMood}`} data-mood={buildMood} data-fp>
+    <TopBar />
+
+    <section class="fp-section">
+      <div class="fp-section-head">
+        <div>
+          <div class="fp-eyebrow">About · ふじおはについて</div>
+          <h2 class="fp-h2 fp-jp">個人の、小さな通り。</h2>
+          <p class="fp-h2-en fp-en fp-mute">
+            A small alley of personal sites — made by one person, by hand.
+          </p>
+        </div>
+      </div>
+
+      <p class="fp-intro">
+        <span class="fp-jp">
+          ふじおは（fujioha）は、@fuji
+          が個人でつくっている小さなサイトの集まりです。観光ガイドにない北海道の歩き方や、思いつきで作った Web
+          ゲームなど、ジャンルはばらばら。広告も提携もなく、自分のために書いて、置いておく場所です。
+        </span>
+        <span class="fp-en">
+          fujioha is a small collection of personal sites, built and kept by one
+          person (@fuji). A local's guide to Hokkaido, a few hand-made web
+          games, and whatever else comes to mind — no ads, no sponsors.
+        </span>
+      </p>
+
+      <div class="fp-about-links">
+        <a class="fp-pill fp-pill-warm" href="https://hokkaido.fujioha.com">
+          <span class="fp-dot"></span>北海道の歩き方
+        </a>
+        <a class="fp-pill" href="https://game.fujioha.com">思いつきの Web ゲーム</a>
+        <a class="fp-pill" href="/journal">日誌 / Journal</a>
+      </div>
+    </section>
+
+    <SiteFooter />
+  </div>
+  <script>
+    import { hydratePortal } from '../scripts/client';
+    hydratePortal();
+  </script>
+</BaseLayout>
+
+<style>
+  .fp-about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+</style>

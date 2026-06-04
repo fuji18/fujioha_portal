@@ -28,6 +28,7 @@ describe('OHAKO_PICKS', () => {
       expect(p.jp.length).toBeGreaterThan(0);
       expect(p.en.length).toBeGreaterThan(0);
       expect(p.img).toMatch(/^gradient[1-5]$/);
+      expect(p.href).toMatch(/^https?:\/\//);
     }
   });
 });
