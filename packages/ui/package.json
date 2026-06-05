@@ -18,15 +18,18 @@
     "src/components",
     "src/styles",
     "src/feed.ts",
+    "src/sitemap.ts",
     "README.md"
   ],
   "exports": {
     "./components/PortalTop.astro": "./src/components/PortalTop.astro",
     "./components/PortalFooter.astro": "./src/components/PortalFooter.astro",
     "./components/Mark.astro": "./src/components/Mark.astro",
+    "./components/SeoHead.astro": "./src/components/SeoHead.astro",
     "./styles/tokens.css": "./src/styles/tokens.css",
     "./styles/chrome.css": "./src/styles/chrome.css",
     "./feed": "./src/feed.ts",
+    "./sitemap": "./src/sitemap.ts",
     "./package.json": "./package.json"
   },
   "peerDependencies": {

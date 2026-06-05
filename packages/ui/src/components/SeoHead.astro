@@ -1,0 +1,44 @@
+---
+/**
+ * 共有 SEO ヘッド。canonical / description / OGP / Twitter カードを出力する。
+ * 各サイトの BaseLayout の <head> 内で使用する。
+ */
+interface Props {
+  title: string;
+  description: string;
+  /** OGP 画像（サイト相対 or 絶対 URL）。未指定なら summary カード。 */
+  image?: string;
+  /** 準備中などで検索インデックスさせたくない場合 true。 */
+  noindex?: boolean;
+  siteName?: string;
+}
+
+const { title, description, image, noindex = false, siteName = 'fujioha' } =
+  Astro.props;
+
+const site = Astro.site;
+const canonical = site
+  ? new URL(Astro.url.pathname, site).href
+  : Astro.url.pathname;
+const ogImage = image
+  ? site
+    ? new URL(image, site).href
+    : image
+  : undefined;
+---
+
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+<meta name="description" content={description} />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={siteName} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+
+<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
