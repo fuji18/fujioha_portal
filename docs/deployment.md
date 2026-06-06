@@ -60,3 +60,7 @@ compatibility_date = "2026-05-30"
 
 - `main` への push でプロダクション配信
 - Preview branch を有効にしている場合、Pull Request 作成時に Preview Deployment が自動生成される
+
+## 公開後
+
+公開直後から 1 週間までの確認項目は [docs/post-launch-checklist.md](post-launch-checklist.md) を参照。

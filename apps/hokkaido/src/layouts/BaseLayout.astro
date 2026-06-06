@@ -20,9 +20,34 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    {/* 旧デプロイ(PWA)が残した Service Worker を掃除するセーフティネット。
+        登録パスに依らず全 SW を unregister し、Cache Storage を全削除する。
+        第1段の駆除は public/sw.js を参照。 */}
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            registrations.forEach(function (registration) {
+              registration.unregister();
+            });
+          })
+          .catch(function () {});
+        if (window.caches && caches.keys) {
+          caches
+            .keys()
+            .then(function (keys) {
+              keys.forEach(function (key) {
+                caches.delete(key);
+              });
+            })
+            .catch(function () {});
+        }
+      }
+    </script>
     <title>{title}</title>
     {/* サイトは準備中のため検索インデックスさせない */}
-    <SeoHead title={title} description={description} noindex />
+    <SeoHead title={title} description={description} image="/og.png" noindex />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
       rel="alternate"
