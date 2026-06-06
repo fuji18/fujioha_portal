@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { resolveMood } from '../lib/moods';
+
+const buildMood = resolveMood(new Date());
+---
+
+<BaseLayout title="404 — fujioha.com" description="ページが見つかりませんでした。">
+  <div class={`fp fp-${buildMood}`} data-mood={buildMood} data-fp>
+    <TopBar />
+
+    <section class="fp-section">
+      <div class="fp-eyebrow">404 · Not found</div>
+      <h1 class="fp-greeting">みつかりません<span class="fp-greeting-dot">.</span></h1>
+      <p class="fp-greeting-en">This page wandered off.</p>
+      <p class="fp-intro">
+        <span class="fp-jp"
+          >お探しのページは見つかりませんでした。通りのトップへ戻ってください。</span
+        >
+        <span class="fp-en">The page you were after isn't here.</span>
+      </p>
+      <p><a class="fp-link" href="/">← 通りのトップへ / Back to the alley</a></p>
+    </section>
+
+    <SiteFooter />
+  </div>
+  <script>
+    import { hydratePortal } from '../scripts/client';
+    hydratePortal();
+  </script>
+</BaseLayout>

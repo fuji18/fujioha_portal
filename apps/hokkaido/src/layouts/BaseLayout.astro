@@ -2,6 +2,7 @@
 import '@fujioha/ui/styles/tokens.css';
 import '@fujioha/ui/styles/chrome.css';
 import '../styles/global.css';
+import SeoHead from '@fujioha/ui/components/SeoHead.astro';
 
 interface Props {
   title?: string;
@@ -20,8 +21,21 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content={description} />
+    {/* サイトは準備中のため検索インデックスさせない */}
+    <SeoHead title={title} description={description} noindex />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="hokkaido.fujioha.com — 更新"
+      href="/rss.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="hokkaido.fujioha.com — 更新"
+      href="/atom.xml"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PortalTop from '@fujioha/ui/components/PortalTop.astro';
+import PortalFooter from '@fujioha/ui/components/PortalFooter.astro';
+---
+
+<BaseLayout
+  title="404 — game.fujioha.com"
+  description="ページが見つかりませんでした。"
+>
+  <div class="gm">
+    <PortalTop sub="game" subJp="Web ゲーム" />
+
+    <section class="gm-section">
+      <div class="gm-eyebrow fp-mono">404 · Not found</div>
+      <h1 class="gm-h2 fp-jp">そのゲームは棚にありません。</h1>
+      <p class="gm-h2-en fp-en fp-mute">This page isn't on the shelf.</p>
+      <p style="margin-top: 24px;">
+        <a class="gm-card-play" href="/">
+          <span class="gm-play-icon">▶</span>
+          <span class="fp-jp">棚へ戻る</span>
+          <span class="fp-en fp-mute">Back to the shelf</span>
+        </a>
+      </p>
+    </section>
+
+    <PortalFooter
+      sub="game"
+      siblingSub="hokkaido"
+      siblingJp="北海道の歩き方"
+      siblingEn="Hokkaido, by a local"
+      siblingHref="https://hokkaido.fujioha.com"
+    />
+  </div>
+</BaseLayout>
