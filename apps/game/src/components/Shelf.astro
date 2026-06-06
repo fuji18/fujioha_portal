@@ -27,13 +27,13 @@ const games = entries
     jp="ほかのゲーム。"
     en="Everything else on the shelf."
   >
-    <div slot="right" class="gm-filters">
+    <div slot="right" class="gm-filters" data-filters>
       {
         GENRES.map((g, i) => (
           <button
             type="button"
             class={`gm-filter ${i === 0 ? 'is-on' : ''}`}
-            disabled
+            data-genre={i === 0 ? 'all' : g.split(' / ')[0]}
           >
             {g}
           </button>
@@ -41,7 +41,28 @@ const games = entries
       }
     </div>
   </SectionHead>
-  <div class="gm-grid">
+  <div class="gm-grid" data-grid>
     {games.map((g) => <GameCard {...g} />)}
   </div>
 </section>
+
+<script is:inline>
+  (function () {
+    const filters = document.querySelector('[data-filters]');
+    const grid = document.querySelector('[data-grid]');
+    if (!filters || !grid) return;
+    filters.addEventListener('click', function (e) {
+      const btn = e.target.closest('.gm-filter');
+      if (!btn) return;
+      const genre = btn.getAttribute('data-genre');
+      filters.querySelectorAll('.gm-filter').forEach(function (b) {
+        b.classList.toggle('is-on', b === btn);
+      });
+      grid.querySelectorAll('.gm-card').forEach(function (card) {
+        const match =
+          genre === 'all' || card.getAttribute('data-genre') === genre;
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  })();
+</script>

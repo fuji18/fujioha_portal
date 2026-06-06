@@ -36,7 +36,7 @@ export const SHOPS: readonly Shop[] = [
     jp: '店主',
     en: 'Shopkeeper',
     sub: 'about',
-    tag: '@fuji',
+    tag: '@fuji18',
     color: '#3e3a32',
     href: '/about',
   },

@@ -4,7 +4,8 @@ import type { Game } from '../lib/games';
 
 type Props = Game;
 
-const { jp, en, genre, genreEn, time, tag, icon, hue, url, status } = Astro.props;
+const { jp, en, genre, genreEn, time, tag, icon, hue, url, status, image } =
+  Astro.props;
 
 const playable = status === 'published' && !!url && tag !== 'wip';
 const href = playable ? url! : '#';
@@ -17,11 +18,16 @@ const isExternal = playable && url!.startsWith('http');
 <a
   class="gm-card"
   href={href}
+  data-genre={genre}
   aria-disabled={!playable}
   {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
 >
   <div class="gm-card-art" style={`--hue: ${hue}`}>
-    <GameIcon kind={icon} hue={hue} />
+    {image ? (
+      <img class="gm-card-thumb" src={image} alt={jp} />
+    ) : (
+      <GameIcon kind={icon} hue={hue} />
+    )}
     {
       tag && (
         <span class={`gm-card-flag gm-flag-${tag}`}>
@@ -47,3 +53,12 @@ const isExternal = playable && url!.startsWith('http');
     </div>
   </div>
 </a>
+
+<style>
+  .gm-card-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+</style>

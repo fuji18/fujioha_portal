@@ -1,53 +1,74 @@
 ---
 import SectionHead from './SectionHead.astro';
-import MiniBlocks from './MiniBlocks.astro';
 import { GAME_FEATURED } from '../lib/featured';
 
 const f = GAME_FEATURED;
-const isDraft = f.status === 'draft';
+// 「今日の一本」は遊べる（公開済み）ゲームのみ。準備中は表示しない。
+const show = f.status === 'published';
+const isExternal = f.url.startsWith('http');
 ---
 
-<section class="gm-section">
-  <SectionHead
-    eyebrow={isDraft ? '近日公開 · Coming soon' : '新作 · Now playing'}
-    jp="今月の一本。"
-    en={isDraft ? 'Coming soon.' : "This month's release."}
-  />
-  <article class="gm-feature">
-    <div class="gm-feature-art" style={`--hue: ${f.hue}`}>
-      <div class="gm-feature-glyph fp-jp">漢</div>
-      <div class="gm-feature-blocks">
-        <MiniBlocks />
-      </div>
-    </div>
-    <div class="gm-feature-body">
-      <div class="gm-feature-tag">{isDraft ? '準備中' : 'NEW'}</div>
-      <h3 class="gm-feature-jp">{f.jp}</h3>
-      <p class="gm-feature-sub fp-jp">{f.sub}</p>
-      <p class="gm-feature-en fp-en">{f.en}</p>
-      <p class="gm-feature-desc">
-        <span class="fp-jp">{f.desc}</span>
-        <span class="fp-en fp-mute">{f.descEn}</span>
-      </p>
-      <div class="gm-spec">
-        <div class="gm-spec-item">
-          <div class="gm-spec-label fp-mono">ジャンル / Genre</div>
-          <div class="gm-spec-value fp-jp">{f.genre}</div>
+{
+  show && (
+    <section class="gm-section">
+      <SectionHead
+        eyebrow="新作 · Now playing"
+        jp="今月の一本。"
+        en="This month's release."
+      />
+      <article class="gm-feature">
+        <div class="gm-feature-art" style={`--hue: ${f.hue}`}>
+          {f.image ? (
+            <img class="gm-feature-img" src={f.image} alt={f.jp} />
+          ) : (
+            <div class="gm-feature-glyph fp-jp">色</div>
+          )}
         </div>
-        <div class="gm-spec-item">
-          <div class="gm-spec-label fp-mono">プレイ時間 / Time</div>
-          <div class="gm-spec-value fp-jp">{f.time}</div>
+        <div class="gm-feature-body">
+          <div class="gm-feature-tag">NEW</div>
+          <h3 class="gm-feature-jp">{f.jp}</h3>
+          <p class="gm-feature-sub fp-jp">{f.sub}</p>
+          <p class="gm-feature-en fp-en">{f.en}</p>
+          <p class="gm-feature-desc">
+            <span class="fp-jp">{f.desc}</span>
+            <span class="fp-en fp-mute">{f.descEn}</span>
+          </p>
+          <div class="gm-spec">
+            <div class="gm-spec-item">
+              <div class="gm-spec-label fp-mono">ジャンル / Genre</div>
+              <div class="gm-spec-value fp-jp">{f.genre}</div>
+            </div>
+            <div class="gm-spec-item">
+              <div class="gm-spec-label fp-mono">プレイ時間 / Time</div>
+              <div class="gm-spec-value fp-jp">{f.time}</div>
+            </div>
+            <div class="gm-spec-item">
+              <div class="gm-spec-label fp-mono">操作 / Controls</div>
+              <div class="gm-spec-value fp-jp">{f.controls}</div>
+            </div>
+          </div>
+          <a
+            class="gm-play"
+            href={f.url}
+            {...(isExternal
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {})}
+          >
+            <span class="gm-play-icon">▶</span>
+            <span class="fp-jp">今すぐ遊ぶ</span>
+            <span class="fp-en">Play now</span>
+          </a>
         </div>
-        <div class="gm-spec-item">
-          <div class="gm-spec-label fp-mono">操作 / Controls</div>
-          <div class="gm-spec-value fp-jp">{f.controls}</div>
-        </div>
-      </div>
-      <button class="gm-play" type="button" disabled={isDraft} aria-disabled={isDraft}>
-        <span class="gm-play-icon">▶</span>
-        <span class="fp-jp">{isDraft ? '準備中' : '今すぐ遊ぶ'}</span>
-        <span class="fp-en">{isDraft ? 'Coming soon' : 'Play now'}</span>
-      </button>
-    </div>
-  </article>
-</section>
+      </article>
+    </section>
+  )
+}
+
+<style>
+  .gm-feature-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+</style>

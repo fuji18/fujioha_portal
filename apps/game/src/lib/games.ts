@@ -25,6 +25,7 @@ export interface Game {
   readonly status: 'published' | 'draft' | 'archived';
   readonly featured: boolean;
   readonly publishedAt?: string;
+  readonly image?: string;
 }
 
 export const GENRES: readonly string[] = [

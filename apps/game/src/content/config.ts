@@ -16,6 +16,8 @@ const games = defineCollection({
     status: z.enum(['published', 'draft', 'archived']).default('draft'),
     featured: z.boolean().default(false),
     publishedAt: z.string().date().optional(),
+    /** サムネ画像（サイト相対 例: /games/color-sense.png）。任意。 */
+    image: z.string().optional(),
   }),
 });
 

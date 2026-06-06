@@ -8,20 +8,26 @@ export interface FeaturedGame {
   readonly time: string;
   readonly controls: string;
   readonly hue: string;
-  /** 公開状態。draft の間は「準備中 / Coming soon」として表示し、プレイ不可。 */
+  /** 公開状態。published のときのみ「今日の一本」に表示する。 */
   readonly status: 'published' | 'draft';
+  /** プレイ先 URL（公開済みゲーム）。 */
+  readonly url: string;
+  /** サムネ画像（サイト相対）。未指定ならグリフ表示にフォールバック。 */
+  readonly image?: string;
 }
 
+// 「今日の一本」は遊べる（公開済み）ゲームのみを出す。
 export const GAME_FEATURED: FeaturedGame = {
-  jp: 'ガチャ漢字',
-  sub: 'ガチャで部首を引いて組む',
-  en: 'Draw radicals from a gacha, build real kanji',
-  desc: 'ガチャで引いた部首・つくりを、ひらめきで組み合わせて漢字を作り出す、運と発見の快感を組み合わせた1〜2分のスナック型ゲーム。',
+  jp: '絶対色感',
+  sub: 'わずかな色のちがいを見抜く',
+  en: 'Odd Hue Out',
+  desc: '少しだけ色のちがう1枚を、並んだタイルの中から見つけ出す。レベルが上がるほど差は小さくシビアに。1分で集中できる色覚ミニゲーム。',
   descEn:
-    'Draw radicals and components from a gacha and combine them by inspiration into real kanji — a one-to-two-minute snack-sized game of luck and discovery.',
+    'Find the one tile whose colour is slightly off. The higher you climb, the smaller the difference. A one-minute test of your eye for colour.',
   genre: 'Puzzle · パズル',
-  time: '1〜2 min',
+  time: '~1 min',
   controls: 'クリックのみ / click only',
-  hue: '#f6d472',
-  status: 'draft',
+  hue: '#c79ad6',
+  status: 'published',
+  url: 'https://color-sense.fujioha.com',
 };

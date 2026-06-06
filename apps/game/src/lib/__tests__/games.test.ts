@@ -42,7 +42,7 @@ describe('game catalog (content collection)', () => {
   });
 
   it('exposes a featured game with hue color', () => {
-    expect(GAME_FEATURED.jp).toBe('ガチャ漢字');
+    expect(GAME_FEATURED.jp).toBe('絶対色感');
     expect(GAME_FEATURED.hue).toMatch(/^#[0-9a-fA-F]{6}$/);
   });
 });

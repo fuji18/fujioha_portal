@@ -4,8 +4,8 @@ import type { Game } from '../games';
 
 const PUBLISHED: Game = {
   id: 'color-sense',
-  jp: 'カラーセンステスト',
-  en: 'Find the odd-colored tile',
+  jp: '絶対色感',
+  en: 'Odd Hue Out',
   genre: 'パズル',
   genreEn: 'Puzzle',
   time: '~1 min',
@@ -21,9 +21,9 @@ const PUBLISHED: Game = {
 describe('gameToFeedItem', () => {
   it('maps a game to a generic FeedItem', () => {
     expect(gameToFeedItem(PUBLISHED)).toEqual({
-      title: 'カラーセンステスト',
+      title: '絶対色感',
       link: 'https://color-sense.fujioha.com',
-      summary: 'Find the odd-colored tile',
+      summary: 'Odd Hue Out',
       pubDate: '2026-05-31',
     });
   });

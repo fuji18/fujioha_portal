@@ -1,7 +1,9 @@
 ---
-import { pickOhako } from '../lib/ohako';
+import { pickOhako, OHAKO_PICKS } from '../lib/ohako';
 
 const pick = pickOhako(0);
+// 候補が2件以上あるときだけ「もう一本」を出す（1件だと押しても変わらないため）。
+const canShuffle = OHAKO_PICKS.length > 1;
 ---
 
 <section class="fp-section fp-featured" data-featured>
@@ -14,10 +16,19 @@ const pick = pickOhako(0);
         shelf.
       </p>
     </div>
-    <button class="fp-shuffle" data-shuffle aria-label="shuffle pick" type="button">
-      <span class="fp-shuffle-icon">↻</span>
-      <span>もう一本 / shuffle</span>
-    </button>
+    {
+      canShuffle && (
+        <button
+          class="fp-shuffle"
+          data-shuffle
+          aria-label="shuffle pick"
+          type="button"
+        >
+          <span class="fp-shuffle-icon">↻</span>
+          <span>もう一本 / shuffle</span>
+        </button>
+      )
+    }
   </div>
 
   <article class="fp-pick">

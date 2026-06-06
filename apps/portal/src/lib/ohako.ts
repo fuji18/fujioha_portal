@@ -24,8 +24,8 @@ export const OHAKO_PICKS: readonly OhakoPick[] = [
   {
     src: 'color-sense.fujioha.com',
     srcLabel: 'Web ゲーム',
-    jp: 'カラーセンステスト',
-    en: 'Find the odd-colored tile',
+    jp: '絶対色感',
+    en: 'Odd Hue Out',
     blurb: '少しだけ色のちがうタイルを探す、1分のミニゲーム。',
     blurbEn: 'Spot the tile that is just slightly off. About a minute a round.',
     meta: 'Browser game · ~1 min',

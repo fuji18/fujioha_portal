@@ -1,7 +1,7 @@
 {
   "id": "color-sense",
-  "jp": "カラーセンステスト",
-  "en": "Find the odd-colored tile",
+  "jp": "絶対色感",
+  "en": "Odd Hue Out",
   "genre": "パズル",
   "genreEn": "Puzzle",
   "time": "~1 min",
@@ -11,5 +11,6 @@
   "url": "https://color-sense.fujioha.com",
   "status": "published",
   "featured": false,
-  "publishedAt": "2026-05-31"
+  "publishedAt": "2026-05-31",
+  "image": "/games/color-sense.png"
 }
