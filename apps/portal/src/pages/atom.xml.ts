@@ -1,10 +1,13 @@
 import type { APIRoute } from 'astro';
-import { RECENT_ITEMS } from '../lib/recent';
-import { buildAtomXml } from '../lib/feed';
+import { buildAtomXml } from '@fujioha/ui/feed';
+import { loadUpdates } from '../lib/updates-source';
+import { updateToFeedItem, PORTAL_FEED_META } from '../lib/updates';
 
 export const prerender = true;
 
-export const GET: APIRoute = () =>
-  new Response(buildAtomXml(RECENT_ITEMS), {
+export const GET: APIRoute = async () => {
+  const items = (await loadUpdates()).map(updateToFeedItem);
+  return new Response(buildAtomXml(items, PORTAL_FEED_META), {
     headers: { 'Content-Type': 'application/atom+xml; charset=utf-8' },
   });
+};

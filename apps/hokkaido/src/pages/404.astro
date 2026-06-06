@@ -2,19 +2,24 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PortalTop from '@fujioha/ui/components/PortalTop.astro';
 import PortalFooter from '@fujioha/ui/components/PortalFooter.astro';
-import Hero from '../components/Hero.astro';
-import ComingSoon from '../components/ComingSoon.astro';
-import Companions from '../components/Companions.astro';
-// 現在このサイトは準備中。記事が整うまで、各セクション（Featured/Cities/
-// Themes/Recent/Local）は表に出さず、ComingSoon の案内のみを表示する。
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="404 — hokkaido.fujioha.com"
+  description="ページが見つかりませんでした。"
+>
   <div class="hk">
     <PortalTop sub="hokkaido" subJp="北海道の歩き方" />
-    <Hero />
-    <ComingSoon />
-    <Companions />
+
+    <section class="hk-section">
+      <div class="hk-eyebrow fp-mono">404 · Not found</div>
+      <h1 class="hk-h2 fp-jp">その道は、まだありません。</h1>
+      <p class="hk-h2-en fp-en fp-mute">This page isn't here.</p>
+      <p style="margin-top: 24px;">
+        <a class="pc-link fp-mono" href="/">← トップへ戻る / Back home</a>
+      </p>
+    </section>
+
     <PortalFooter
       sub="hokkaido"
       siblingSub="game"

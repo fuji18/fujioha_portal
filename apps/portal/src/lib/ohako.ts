@@ -34,19 +34,6 @@ export const OHAKO_PICKS: readonly OhakoPick[] = [
     img: 'gradient2',
     href: 'https://color-sense.fujioha.com',
   },
-  {
-    src: 'chitose-sapporo.fujioha.com',
-    srcLabel: '北海道の歩き方',
-    jp: '千歳〜札幌 グルメ・観光ガイド',
-    en: 'Chitose to Sapporo: food & travel guide',
-    blurb: '新千歳空港から札幌までの間に立ち寄りたい食と観光を、地元の歩き方で。',
-    blurbEn: 'Food and travel between New Chitose Airport and Sapporo, the local way.',
-    meta: '姉妹サイト · Companion site',
-    cta: 'サイトへ',
-    ctaEn: 'Visit',
-    img: 'gradient1',
-    href: 'https://chitose-sapporo.fujioha.com',
-  },
 ];
 
 export function pickOhako(now: number = Date.now()): OhakoPick {

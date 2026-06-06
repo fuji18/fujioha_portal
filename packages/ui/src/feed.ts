@@ -1,21 +1,26 @@
-import { RECENT_ITEMS, type RecentItem } from './recent';
+/**
+ * Shared RSS 2.0 / Atom 1.0 feed builders for the fujioha.com network.
+ *
+ * App-agnostic: each site maps its Content Collection entries to `FeedItem`
+ * and calls these builders. No dependency on any app's data shape.
+ */
+
+export interface FeedItem {
+  readonly title: string;
+  readonly link: string;
+  readonly summary: string;
+  /** 公開日（YYYY-MM-DD）。 */
+  readonly pubDate: string;
+}
 
 export interface FeedMeta {
   readonly title: string;
   readonly description: string;
   /** サイトの絶対 URL（末尾スラッシュなし）。 */
   readonly site: string;
-  readonly rssPath: string;
-  readonly atomPath: string;
+  readonly rssPath?: string;
+  readonly atomPath?: string;
 }
-
-export const FEED_META: FeedMeta = {
-  title: 'fujioha.com — 最近の更新 / Recent',
-  description: 'ふじおはの各サイトの更新情報 / Updates across the fujioha network.',
-  site: 'https://fujioha.com',
-  rssPath: '/rss.xml',
-  atomPath: '/atom.xml',
-};
 
 const XML_ESCAPES: Record<string, string> = {
   '&': '&amp;',
@@ -40,22 +45,23 @@ export function toRfc3339(isoDate: string): string {
   return new Date(`${isoDate}T00:00:00Z`).toISOString();
 }
 
-/** 最も新しい pubDate を返す（フィード全体の更新日時）。空なら epoch。 */
-function latestPubDate(items: readonly RecentItem[]): string {
+function sortedByPubDateDesc(items: readonly FeedItem[]): FeedItem[] {
+  return [...items].sort((a, b) => b.pubDate.localeCompare(a.pubDate));
+}
+
+function latestPubDate(items: readonly FeedItem[]): string {
   if (items.length === 0) return '1970-01-01';
   return items.reduce((max, it) => (it.pubDate > max ? it.pubDate : max), items[0].pubDate);
 }
 
-/** RSS 2.0 フィードを生成する。 */
-export function buildRssXml(
-  items: readonly RecentItem[] = RECENT_ITEMS,
-  meta: FeedMeta = FEED_META,
-): string {
-  const entries = items
+/** RSS 2.0 フィードを生成する（pubDate 降順）。 */
+export function buildRssXml(items: readonly FeedItem[], meta: FeedMeta): string {
+  const rssPath = meta.rssPath ?? '/rss.xml';
+  const entries = sortedByPubDateDesc(items)
     .map((it) => {
-      const title = escapeXml(it.jp);
-      const link = escapeXml(it.url);
-      const description = escapeXml(it.en);
+      const title = escapeXml(it.title);
+      const link = escapeXml(it.link);
+      const description = escapeXml(it.summary);
       return [
         '    <item>',
         `      <title>${title}</title>`,
@@ -77,7 +83,7 @@ export function buildRssXml(
     `    <description>${escapeXml(meta.description)}</description>`,
     '    <language>ja</language>',
     `    <lastBuildDate>${toRfc822(latestPubDate(items))}</lastBuildDate>`,
-    `    <atom:link href="${escapeXml(meta.site + meta.rssPath)}" rel="self" type="application/rss+xml" />`,
+    `    <atom:link href="${escapeXml(meta.site + rssPath)}" rel="self" type="application/rss+xml" />`,
     entries,
     '  </channel>',
     '</rss>',
@@ -85,17 +91,15 @@ export function buildRssXml(
   ].join('\n');
 }
 
-/** Atom 1.0 フィードを生成する。 */
-export function buildAtomXml(
-  items: readonly RecentItem[] = RECENT_ITEMS,
-  meta: FeedMeta = FEED_META,
-): string {
+/** Atom 1.0 フィードを生成する（pubDate 降順）。 */
+export function buildAtomXml(items: readonly FeedItem[], meta: FeedMeta): string {
+  const atomPath = meta.atomPath ?? '/atom.xml';
   const updated = toRfc3339(latestPubDate(items));
-  const entries = items
+  const entries = sortedByPubDateDesc(items)
     .map((it) => {
-      const title = escapeXml(it.jp);
-      const link = escapeXml(it.url);
-      const summary = escapeXml(it.en);
+      const title = escapeXml(it.title);
+      const link = escapeXml(it.link);
+      const summary = escapeXml(it.summary);
       return [
         '  <entry>',
         `    <title>${title}</title>`,
@@ -113,7 +117,7 @@ export function buildAtomXml(
     '<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ja">',
     `  <title>${escapeXml(meta.title)}</title>`,
     `  <subtitle>${escapeXml(meta.description)}</subtitle>`,
-    `  <link href="${escapeXml(meta.site + meta.atomPath)}" rel="self" />`,
+    `  <link href="${escapeXml(meta.site + atomPath)}" rel="self" />`,
     `  <link href="${escapeXml(meta.site)}/" />`,
     `  <id>${escapeXml(meta.site)}/</id>`,
     `  <updated>${updated}</updated>`,

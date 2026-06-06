@@ -1,9 +1,11 @@
 ---
-import { RECENT_ITEMS } from '../lib/recent';
+import { loadUpdates } from '../lib/updates-source';
+
+const updates = await loadUpdates();
 ---
 
 {
-  RECENT_ITEMS.length > 0 && (
+  updates.length > 0 && (
     <section class="fp-section fp-recent">
       <div class="fp-section-head">
         <div>
@@ -18,7 +20,7 @@ import { RECENT_ITEMS } from '../lib/recent';
         </a>
       </div>
       <ol class="fp-feed">
-        {RECENT_ITEMS.map((it) => (
+        {updates.map((it) => (
           <li>
             <a
               class="fp-feed-item"

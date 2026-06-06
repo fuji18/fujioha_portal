@@ -1,11 +1,16 @@
 ---
 import '../styles/global.css';
+import SeoHead from '@fujioha/ui/components/SeoHead.astro';
 
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title = 'fujioha.com — おはよう' } = Astro.props;
+const {
+  title = 'fujioha.com — おはよう',
+  description = '個人がつくる小さなサイトの通り。北海道の歩き方と、思いつきの Web ゲーム。',
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -14,6 +19,7 @@ const { title = 'fujioha.com — おはよう' } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
+    <SeoHead title={title} description={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
       rel="alternate"
