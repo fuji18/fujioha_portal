@@ -1,8 +1,19 @@
 # Cloudflare Pages 用ヘッダ設定。
+
+# セキュリティヘッダ（全パス）。CSP は inline スクリプト・Google Fonts と
+# 兼ね合いがあるため未設定（将来課題）。
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
 # 自己破壊型 Service Worker は常に最新を取得させたいので no-cache にする。
 # (多くのブラウザは SW スクリプト本体の更新チェック時に HTTP キャッシュを
 #  バイパスするが、防御的に明示しておく。)
 /sw.js
   Cache-Control: no-cache
+
 /service-worker.js
   Cache-Control: no-cache

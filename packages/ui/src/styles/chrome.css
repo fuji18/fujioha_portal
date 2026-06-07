@@ -166,6 +166,26 @@
 .pc-footer-meta {
   font-size: 11.5px;
 }
+.pc-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+}
+.pc-footer-legal a {
+  color: var(--mute);
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
+.pc-footer-legal a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
 
 @media (max-width: 900px) {
   .pc-footer-cross {
