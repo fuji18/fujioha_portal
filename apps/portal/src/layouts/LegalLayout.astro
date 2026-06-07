@@ -1,0 +1,57 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { resolveMood } from '../lib/moods';
+import { LEGAL_UPDATED } from '../lib/site-meta';
+
+interface Props {
+  /** <title> 用。 */
+  title: string;
+  /** メタ description / OGP 用。未指定なら BaseLayout の既定文言。 */
+  description?: string;
+  /** 小見出し（fp-eyebrow）。 */
+  eyebrow: string;
+  /** 日本語見出し。 */
+  jp: string;
+  /** 英語サマリ。 */
+  en: string;
+  /** 最終更新日を表示するか（問い合わせページなど不要な場合は false）。 */
+  showUpdated?: boolean;
+}
+
+const { title, description, eyebrow, jp, en, showUpdated = true } = Astro.props;
+const buildMood = resolveMood(new Date());
+---
+
+<BaseLayout title={title} description={description}>
+  <div class={`fp fp-${buildMood}`} data-mood={buildMood} data-fp>
+    <TopBar />
+
+    <section class="fp-section">
+      <div class="fp-section-head">
+        <div>
+          <div class="fp-eyebrow">{eyebrow}</div>
+          <h2 class="fp-h2 fp-jp">{jp}</h2>
+          <p class="fp-h2-en fp-en fp-mute">{en}</p>
+        </div>
+      </div>
+
+      <div class="fp-legal-body">
+        <slot />
+      </div>
+
+      {
+        showUpdated && (
+          <p class="fp-legal-updated fp-mono fp-faint">最終更新日: {LEGAL_UPDATED}</p>
+        )
+      }
+    </section>
+
+    <SiteFooter />
+  </div>
+  <script>
+    import { hydratePortal } from '../scripts/client';
+    hydratePortal();
+  </script>
+</BaseLayout>

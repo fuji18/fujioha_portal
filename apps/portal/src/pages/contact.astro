@@ -1,0 +1,43 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_FORM_URL, CONTACT_FORM_READY } from '../lib/site-meta';
+---
+
+<LegalLayout
+  title="fujioha.com — お問い合わせ / Contact"
+  description="ふじおは（fujioha.com）へのお問い合わせ。内容のご指摘・削除依頼・不具合報告はこちらから。"
+  eyebrow="Contact · お問い合わせ"
+  jp="お問い合わせ。"
+  en="Questions, corrections, takedown requests."
+  showUpdated={false}
+>
+  <p class="fp-legal-lead">
+    当サイトの内容に関するご指摘、情報の削除・修正のご依頼、Web
+    ゲームの不具合報告などは、以下のフォームからお寄せください。
+  </p>
+
+  {
+    CONTACT_FORM_READY ? (
+      <p class="fp-legal-cta-wrap">
+        <a
+          class="fp-pill fp-pill-warm fp-legal-cta"
+          href={CONTACT_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="fp-dot" />
+          お問い合わせフォームを開く
+        </a>
+      </p>
+    ) : (
+      <p class="fp-legal-cta-wrap">
+        <span class="fp-pill fp-legal-cta is-pending">お問い合わせフォームは準備中です</span>
+      </p>
+    )
+  }
+
+  <p class="fp-legal-note fp-mute">
+    いただいたお問い合わせには、できる範囲で対応します。内容によっては、返信できない場合や、お時間をいただく場合があります。あらかじめご了承ください。送信される情報の取り扱いについては
+    <a href="/privacy">プライバシーポリシー</a>をご覧ください。
+  </p>
+</LegalLayout>
