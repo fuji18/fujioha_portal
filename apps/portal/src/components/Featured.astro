@@ -32,7 +32,18 @@ const canShuffle = OHAKO_PICKS.length > 1;
   </div>
 
   <article class="fp-pick">
-    <div class={`fp-pick-art fp-grad-${pick.img}`} data-pick-art></div>
+    <div
+      class={`fp-pick-art${pick.image ? '' : ` fp-grad-${pick.img}`}`}
+      data-pick-art
+    >
+      <img
+        class="fp-pick-img"
+        src={pick.image}
+        alt={pick.jp}
+        data-pick-img
+        hidden={!pick.image}
+      />
+    </div>
     <div class="fp-pick-body">
       <div class="fp-pick-src">
         <span class="fp-mono fp-faint" data-pick-src>{pick.src}</span>

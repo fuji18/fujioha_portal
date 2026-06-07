@@ -93,7 +93,18 @@ function renderPick(root: HTMLElement, pick: OhakoPick): void {
       .split(' ')
       .filter((c) => !c.startsWith(GRADIENT_CLASS_PREFIX))
       .join(' ');
-    art.classList.add(`${GRADIENT_CLASS_PREFIX}${pick.img}`);
+    // 画像があれば画像を、なければグラデーションを表示する。
+    if (!pick.image) art.classList.add(`${GRADIENT_CLASS_PREFIX}${pick.img}`);
+  }
+  const img = root.querySelector<HTMLImageElement>('[data-pick-img]');
+  if (img) {
+    if (pick.image) {
+      img.src = pick.image;
+      img.alt = pick.jp;
+      img.hidden = false;
+    } else {
+      img.hidden = true;
+    }
   }
   const setText = (selector: string, value: string): void => {
     const el = root.querySelector<HTMLElement>(selector);
