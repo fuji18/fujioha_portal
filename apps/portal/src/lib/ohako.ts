@@ -16,6 +16,8 @@ export interface OhakoPick {
   readonly cta: string;
   readonly ctaEn: string;
   readonly img: GradientKey;
+  /** サムネ画像（サイト相対 例: /updates/color-sense.svg）。未指定なら img のグラデーション表示にフォールバック。 */
+  readonly image?: string;
   readonly href: string;
 }
 
@@ -32,6 +34,8 @@ export const OHAKO_PICKS: readonly OhakoPick[] = [
     cta: '今すぐ遊ぶ',
     ctaEn: 'Play now',
     img: 'gradient2',
+    // フィードと共通の「答え隠しお題グリッド」ティザーを再利用（単一ソース）。
+    image: '/updates/color-sense.svg',
     href: 'https://color-sense.fujioha.com',
   },
 ];
