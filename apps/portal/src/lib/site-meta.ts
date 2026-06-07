@@ -18,7 +18,7 @@ export const LEGAL_UPDATED = '2026年6月7日';
  * プレースホルダのままだと contact ページは「準備中」を表示する（リンク切れを出さない）。
  */
 export const CONTACT_FORM_PLACEHOLDER = 'https://forms.gle/REPLACE_ME';
-export const CONTACT_FORM_URL = CONTACT_FORM_PLACEHOLDER;
+export const CONTACT_FORM_URL = 'https://forms.gle/RVAStKY72cxtfoVCA';
 
 /** フォーム URL が実設定済みか（プレースホルダでないか）。 */
 export const CONTACT_FORM_READY = CONTACT_FORM_URL !== CONTACT_FORM_PLACEHOLDER;
