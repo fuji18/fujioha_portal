@@ -1,3 +1,5 @@
+import type { GameIconKind } from './games';
+
 export interface FeaturedGame {
   readonly jp: string;
   readonly sub: string;
@@ -8,11 +10,13 @@ export interface FeaturedGame {
   readonly time: string;
   readonly controls: string;
   readonly hue: string;
+  /** 棚カードと同じアイコン種別。画像未指定時のフォールバック表示に使う。 */
+  readonly icon: GameIconKind;
   /** 公開状態。published のときのみ「今日の一本」に表示する。 */
   readonly status: 'published' | 'draft';
   /** プレイ先 URL（公開済みゲーム）。 */
   readonly url: string;
-  /** サムネ画像（サイト相対）。未指定ならグリフ表示にフォールバック。 */
+  /** サムネ画像（サイト相対）。未指定なら棚カードと同じアイコン表示にフォールバック。 */
   readonly image?: string;
 }
 
@@ -28,6 +32,7 @@ export const GAME_FEATURED: FeaturedGame = {
   time: '~1 min',
   controls: 'クリックのみ / click only',
   hue: '#c79ad6',
+  icon: 'palette',
   status: 'published',
   url: 'https://color-sense.fujioha.com',
 };

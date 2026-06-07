@@ -1,5 +1,6 @@
 ---
 import SectionHead from './SectionHead.astro';
+import GameIcon from './GameIcon.astro';
 import { GAME_FEATURED } from '../lib/featured';
 
 const f = GAME_FEATURED;
@@ -21,7 +22,7 @@ const isExternal = f.url.startsWith('http');
           {f.image ? (
             <img class="gm-feature-img" src={f.image} alt={f.jp} />
           ) : (
-            <div class="gm-feature-glyph fp-jp">色</div>
+            <GameIcon kind={f.icon} hue={f.hue} />
           )}
         </div>
         <div class="gm-feature-body">
