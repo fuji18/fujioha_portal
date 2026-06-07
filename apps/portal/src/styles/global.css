@@ -784,6 +784,10 @@ button {
 .fp-feed-item:hover {
   background: color-mix(in oklch, var(--accent) 4%, transparent);
 }
+/* サムネのある行は背の高いサムネに合わせて縦中央で揃える（baseline だと崩れるため）。 */
+.fp-feed-item-art {
+  align-items: center;
+}
 .fp-feed-item:last-child {
   border-bottom: 0;
 }

@@ -23,7 +23,7 @@ const updates = await loadUpdates();
         {updates.map((it) => (
           <li>
             <a
-              class="fp-feed-item"
+              class={`fp-feed-item${it.kind === 'release' && it.image ? ' fp-feed-item-art' : ''}`}
               href={it.url}
               target="_blank"
               rel="noopener noreferrer"
