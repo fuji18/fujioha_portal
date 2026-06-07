@@ -184,15 +184,13 @@ body {
     linear-gradient(160deg, #1a1726 0%, #0f0d16 100%);
   overflow: hidden;
 }
-.gm-feature-glyph {
-  position: absolute;
-  font-family: var(--jp);
-  font-weight: 600;
-  font-size: 280px;
-  color: var(--hue);
-  opacity: 0.14;
-  line-height: 1;
-  user-select: none;
+/* 画像なし時は棚カードと同じ GameIcon を、今月の一本パネル用に大きく見せる。 */
+.gm-feature-art .gm-icon-svg {
+  width: clamp(140px, 30vw, 220px);
+  height: clamp(140px, 30vw, 220px);
+}
+.gm-feature-art .gm-icon-glyph {
+  font-size: clamp(120px, 26vw, 200px);
 }
 .gm-feature-blocks {
   position: relative;
@@ -485,9 +483,6 @@ body {
   .gm-feature-art {
     min-height: 240px;
   }
-  .gm-feature-glyph {
-    font-size: 180px;
-  }
   .gm-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -513,9 +508,6 @@ body {
   }
   .gm-feature-art {
     min-height: 200px;
-  }
-  .gm-feature-glyph {
-    font-size: 140px;
   }
   .gm-spec {
     gap: 20px;
