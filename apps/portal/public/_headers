@@ -1,13 +1,19 @@
 # Cloudflare Pages 用ヘッダ設定。
 
-# セキュリティヘッダ（全パス）。CSP は inline スクリプト・Google Fonts と
-# 兼ね合いがあるため未設定（将来課題）。
+# セキュリティヘッダ（全パス）。
+# CSP の script-src/style-src に 'unsafe-inline' を許容しているのは、自己破壊型
+# Service Worker や game の絞り込みなどの is:inline スクリプト、および Astro の
+# scoped style が inline で出力されるため。静的サイト（SSR・ユーザ生成コンテンツ
+# なし）で XSS 注入面がほぼ無いことを踏まえた判断で、ハッシュ/nonce 化は将来課題。
+# 外部許可元: Google Fonts (fonts.googleapis.com / fonts.gstatic.com) と
+# Cloudflare Web Analytics (static.cloudflareinsights.com / cloudflareinsights.com)。
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://cloudflareinsights.com; form-action 'self'; upgrade-insecure-requests
 
 # 自己破壊型 Service Worker は常に最新を取得させたいので no-cache にする。
 # (多くのブラウザは SW スクリプト本体の更新チェック時に HTTP キャッシュを
