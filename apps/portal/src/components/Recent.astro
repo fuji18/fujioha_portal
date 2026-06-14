@@ -38,7 +38,13 @@ const updates = await loadUpdates();
                 class={`fp-feed-title fp-jp${it.kind === 'release' && it.image ? ' fp-feed-title-art' : ''}`}
               >
                 {it.kind === 'release' && it.image && (
-                  <img class="fp-feed-thumb" src={it.image} alt="" loading="lazy" />
+                  <img
+                    class="fp-feed-thumb"
+                    src={it.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
                 )}
                 {it.jp}
               </span>
