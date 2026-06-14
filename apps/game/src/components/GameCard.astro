@@ -24,7 +24,13 @@ const isExternal = playable && url!.startsWith('http');
 >
   <div class="gm-card-art" style={`--hue: ${hue}`}>
     {image ? (
-      <img class="gm-card-thumb" src={image} alt={jp} />
+      <img
+        class="gm-card-thumb"
+        src={image}
+        alt={jp}
+        loading="lazy"
+        decoding="async"
+      />
     ) : (
       <GameIcon kind={icon} hue={hue} />
     )}

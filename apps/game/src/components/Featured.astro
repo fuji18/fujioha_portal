@@ -20,7 +20,12 @@ const isExternal = f.url.startsWith('http');
       <article class="gm-feature">
         <div class="gm-feature-art" style={`--hue: ${f.hue}`}>
           {f.image ? (
-            <img class="gm-feature-img" src={f.image} alt={f.jp} />
+            <img
+              class="gm-feature-img"
+              src={f.image}
+              alt={f.jp}
+              decoding="async"
+            />
           ) : (
             <GameIcon kind={f.icon} hue={f.hue} />
           )}
